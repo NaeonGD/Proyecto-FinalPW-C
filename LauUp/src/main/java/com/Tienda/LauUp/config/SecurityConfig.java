@@ -27,11 +27,11 @@ public class SecurityConfig {
                 .requestMatchers(
                         "/", "/index.html", "/*.html",
                         "/css/**", "/js/**", "/img/**",
+                        "/favicon.ico", 
                         "/api/productos/**", "/api/categorias/**",
-                        "/api/usuarios/registro", "/api/usuarios/login"
-                    ).permitAll().anyRequest().authenticated()
-                //.anyRequest().authenticated() 
-                //dice que las demas peticiones requieren si o si estar logeado
+                        "/api/usuarios/**"
+                    ).permitAll()
+                .anyRequest().authenticated()
                 )
 		.formLogin(AbstractHttpConfigurer::disable)
 		.httpBasic(AbstractHttpConfigurer::disable);

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Mi Perfil | Lau & Up.</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <a href="index.html" class="logo">✦ Lau &amp; Up.</a>
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Inicio</a>
+            <a href="catalogo.html" class="nav-link">Catálogo</a>
+        </nav>
+        <div class="header-actions">
+            <button class="btn-icon" onclick="window.location='catalogo.html'">🛒</button>
+        </div>
+    </div>
+</header>
+
+<div class="perfil-layout">
+    <aside class="perfil-sidebar">
+        <div class="perfil-avatar">👤</div>
+        <h3 id="perfil-nombre">Cargando...</h3>
+        <p id="perfil-email" class="text-muted"></p>
+        <nav class="perfil-nav">
+            <a href="#" class="perfil-link active" onclick="mostrarSeccion('datos')">Mi perfil</a>
+            <a href="#" class="perfil-link" onclick="mostrarSeccion('pedidos')">Mis pedidos</a>
+            <a href="#" class="perfil-link peligro" onclick="cerrarSesion()">Cerrar sesión</a>
+        </nav>
+    </aside>
+
+    <main class="perfil-main">
+        <!-- Datos personales -->
+        <section id="sec-datos" class="perfil-seccion">
+            <h2 class="section-title" style="text-align:left">Mis datos</h2>
+            <div id="datos-ok" class="alert-success" style="display:none">
+                Datos guardados correctamente.
+            </div>
+            <div class="form-row">
+                <label class="form-label">Nombre
+                    <input type="text" id="p-nombre" class="form-input"/>
+                </label>
+                <label class="form-label">Apellido
+                    <input type="text" id="p-apellido" class="form-input"/>
+                </label>
+            </div>
+            <label class="form-label">Correo (no editable)
+                <input type="email" id="p-email" class="form-input" disabled/>
+            </label>
+            <label class="form-label">Teléfono
+                <input type="tel" id="p-tel" class="form-input"/>
+            </label>
+            <label class="form-label">Dirección
+                <input type="text" id="p-dir" class="form-input"/>
+            </label>
+            <button class="btn-primary" onclick="guardarPerfil()">Guardar cambios</button>
+        </section>
+
+        <!-- Pedidos -->
+        <section id="sec-pedidos" class="perfil-seccion" style="display:none">
+            <h2 class="section-title" style="text-align:left">Mis pedidos</h2>
+            <div id="lista-pedidos">
+                <p class="text-muted">Cargando pedidos...</p>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script>
+    const usuario = authActual();
+    if (!usuario) window.location.href = 'login.html';
+
+    document.getElementById('perfil-nombre').textContent = usuario.nombre + ' ' + usuario.apellido;
+    document.getElementById('perfil-email').textContent  = usuario.email;
+    document.getElementById('p-nombre').value   = usuario.nombre    || '';
+    document.getElementById('p-apellido').value = usuario.apellido  || '';
+    document.getElementById('p-email').value    = usuario.email     || '';
+    document.getElementById('p-tel').value      = usuario.telefono  || '';
+    document.getElementById('p-dir').value      = usuario.direccion || '';
+
+    function mostrarSeccion(sec) {
+        document.querySelectorAll('.perfil-seccion').forEach(s => s.style.display = 'none');
+        document.querySelectorAll('.perfil-link').forEach(l => l.classList.remove('active'));
+        document.getElementById('sec-' + sec).style.display = 'block';
+        if (sec === 'pedidos') cargarPedidos();
+    }
+
+    async function guardarPerfil() {
+        const datos = {
+            nombre:    document.getElementById('p-nombre').value.trim(),
+            apellido:  document.getElementById('p-apellido').value.trim(),
+            telefono:  document.getElementById('p-tel').value.trim(),
+            direccion: document.getElementById('p-dir').value.trim()
+        };
+        const res = await API.put('/api/usuarios/' + usuario.id, datos);
+        if (!res.error) {
+            guardarAuth({...usuario, ...res});
+            document.getElementById('datos-ok').style.display = 'block';
+            setTimeout(() => document.getElementById('datos-ok').style.display = 'none', 3000);
+        }
+    }
+
+    async function cargarPedidos() {
+        const contenedor = document.getElementById('lista-pedidos');
+        const pedidos = await API.get('/api/pedidos/usuario/' + usuario.id);
+        if (!pedidos.length) {
+            contenedor.innerHTML = '<p class="text-muted">Aún no tienes pedidos.</p>';
+            return;
+        }
+        contenedor.innerHTML = pedidos.map(p => `
+            <div class="pedido-card">
+                <div class="pedido-header">
+                    <span><strong>Pedido #${p.id}</strong></span>
+                    <span class="badge-estado estado-${p.estado.toLowerCase()}">${p.estado}</span>
+                </div>
+                <p class="text-muted">${new Date(p.creadoEn).toLocaleDateString('es-CO', {dateStyle:'long'})}</p>
+                <div class="pedido-items">
+                    ${p.detalles.map(d => `
+                        <div class="pedido-item">
+                            <span>${d.producto.nombre} x${d.cantidad}</span>
+                            <span>${formatPrecio(d.precioUnit * d.cantidad)}</span>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="pedido-total">
+                    <strong>Total: ${formatPrecio(p.total)}</strong>
+                </div>
+            </div>
+        `).join('');
+    }
+
+    function formatPrecio(n) {
+        return new Intl.NumberFormat('es-CO', {
+            style: 'currency', currency: 'COP', minimumFractionDigits: 0
+        }).format(n);
+    }
+
+    function cerrarSesion() {
+        localStorage.removeItem('belleza_user');
+        window.location.href = 'index.html';
+    }
+</script>
+</body>
+</html>

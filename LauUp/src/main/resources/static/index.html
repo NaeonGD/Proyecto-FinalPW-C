@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Lau Up | Tienda</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <a href="index.html" class="logo">✦ Lau &amp; Up.</a>
+        <nav class="nav">
+            <a href="index.html" class="nav-link active">Inicio</a>
+            <a href="catalogo.html" class="nav-link">Catálogo</a>
+            <span id="nav-auth"></span>
+        </nav>
+        <div class="header-actions">
+            <button class="btn-icon" onclick="abrirCarrito()" title="Carrito">
+                🛒 <span class="badge" id="badge-carrito">0</span>
+            </button>
+            <button class="btn-icon" id="btn-user" onclick="irPerfil()" title="Perfil">👤</button>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="hero-content">
+        <span class="hero-tag">Nueva colección</span>
+        <h1 class="hero-title">Tu belleza,<br/><em>tu historia.</em></h1>
+        <p class="hero-sub">Productos de belleza y cuidado personal cuidadosamente seleccionados para ti.</p>
+        <a href="catalogo.html" class="btn-primary">Ver colección →</a>
+    </div>
+</section>
+
+<section class="section">
+    <h2 class="section-title">Explora por categoría</h2>
+    <div class="categorias-grid" id="categorias-grid">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+    </div>
+</section>
+
+<section class="section section-alt">
+    <h2 class="section-title">Productos destacados</h2>
+    <div class="productos-grid" id="productos-grid">
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+        <div class="skeleton-card"></div>
+    </div>
+    <div style="text-align:center;margin-top:2rem">
+        <a href="catalogo.html" class="btn-outline">Ver todos los productos</a>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <span class="logo">✦ Lau &amp; Up.</span>
+        <p>© 2026 · Proyecto Programación Web · USCO</p>
+    </div>
+</footer>
+
+<div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
+<aside class="carrito-panel" id="carrito-panel">
+    <div class="carrito-header">
+        <h3>Tu carrito</h3>
+        <button onclick="cerrarCarrito()" class="btn-cerrar">✕</button>
+    </div>
+    <div class="carrito-items" id="carrito-items"></div>
+    <div class="carrito-footer">
+        <div class="carrito-total">
+            <span>Total</span>
+            <strong id="carrito-total-val">$0</strong>
+        </div>
+        <button class="btn-primary w100" onclick="checkout()">Proceder al pago</button>
+    </div>
+</aside>
+
+<div class="modal-overlay" id="modal-checkout" style="display:none">
+    <div class="modal">
+        <h3>Confirmar pedido</h3>
+        <label>Dirección de envío
+            <input type="text" id="input-direccion" placeholder="Calle 12 #34-56, Neiva"/>
+        </label>
+        <div class="modal-actions">
+            <button class="btn-outline" onclick="cerrarCheckout()">Cancelar</button>
+            <button class="btn-primary" onclick="confirmarPedido()">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/carrito.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

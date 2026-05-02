@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Acceder | Lau & Up.</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body class="auth-body">
+
+<div class="auth-container">
+    <a href="index.html" class="logo" style="display:block;text-align:center;margin-bottom:2rem">
+        ✦ Lau &amp; Up.
+    </a>
+
+    <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="mostrarTab('login')">Iniciar sesión</button>
+        <button class="auth-tab" id="tab-registro" onclick="mostrarTab('registro')">Registrarse</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="form-login" class="auth-form">
+        <h2 class="auth-title">Bienvenida de vuelta ✨</h2>
+        <div id="login-error" class="alert-error" style="display:none"></div>
+        <label class="form-label">Correo electrónico
+            <input type="email" id="login-email" class="form-input" placeholder="tu@correo.com"/>
+        </label>
+        <label class="form-label">Contraseña
+            <input type="password" id="login-pass" class="form-input" placeholder="••••••••"/>
+        </label>
+        <button class="btn-primary w100" onclick="hacerLogin()">Ingresar</button>
+        <p class="auth-switch">¿No tienes cuenta?
+            <a href="#" onclick="mostrarTab('registro')">Regístrate</a>
+        </p>
+    </div>
+
+    <!-- REGISTRO -->
+    <div id="form-registro" class="auth-form" style="display:none">
+        <h2 class="auth-title">Crea tu cuenta 💄</h2>
+        <div id="reg-error" class="alert-error"  style="display:none"></div>
+        <div id="reg-ok"    class="alert-success" style="display:none"></div>
+        <label class="form-label">Nombre
+            <input type="text" id="reg-nombre" class="form-input" placeholder="María"/>
+        </label>
+        <label class="form-label">Apellido
+            <input type="text" id="reg-apellido" class="form-input" placeholder="García"/>
+        </label>
+        <label class="form-label">Correo electrónico
+            <input type="email" id="reg-email" class="form-input" placeholder="tu@correo.com"/>
+        </label>
+        <label class="form-label">Contraseña
+            <input type="password" id="reg-pass" class="form-input" placeholder="Mínimo 6 caracteres"/>
+        </label>
+        <label class="form-label">Teléfono (opcional)
+            <input type="tel" id="reg-tel" class="form-input" placeholder="321 000 0000"/>
+        </label>
+        <button class="btn-primary w100" onclick="hacerRegistro()">Crear cuenta</button>
+        <p class="auth-switch">¿Ya tienes cuenta?
+            <a href="#" onclick="mostrarTab('login')">Inicia sesión</a>
+        </p>
+    </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script>
+    if (authActual()) window.location.href = 'index.html';
+
+    function mostrarTab(tab) {
+        document.getElementById('form-login').style.display    = tab === 'login'    ? 'block' : 'none';
+        document.getElementById('form-registro').style.display = tab === 'registro' ? 'block' : 'none';
+        document.getElementById('tab-login').classList.toggle('active',    tab === 'login');
+        document.getElementById('tab-registro').classList.toggle('active', tab === 'registro');
+    }
+
+    async function hacerLogin() {
+        const email = document.getElementById('login-email').value.trim();
+        const pass  = document.getElementById('login-pass').value;
+        const err   = document.getElementById('login-error');
+        err.style.display = 'none';
+
+        if (!email || !pass) {
+            err.textContent = 'Completa todos los campos.';
+            err.style.display = 'block';
+            return;
+        }
+        try {
+            const data = await API.login(email, pass);
+            if (data.error) {
+                err.textContent = data.error;
+                err.style.display = 'block';
+                return;
+            }
+            guardarAuth(data);
+            window.location.href = 'index.html';
+        } catch (e) {
+            err.textContent = 'Error al conectar con el servidor.';
+            err.style.display = 'block';
+        }
+    }
+
+    async function hacerRegistro() {
+        const nombre   = document.getElementById('reg-nombre').value.trim();
+        const apellido = document.getElementById('reg-apellido').value.trim();
+        const email    = document.getElementById('reg-email').value.trim();
+        const pass     = document.getElementById('reg-pass').value;
+        const tel      = document.getElementById('reg-tel').value.trim();
+        const err      = document.getElementById('reg-error');
+        const ok       = document.getElementById('reg-ok');
+        err.style.display = 'none';
+        ok.style.display  = 'none';
+
+        if (!nombre || !apellido || !email || !pass) {
+            err.textContent = 'Completa los campos obligatorios.';
+            err.style.display = 'block';
+            return;
+        }
+        if (pass.length < 6) {
+            err.textContent = 'La contraseña debe tener al menos 6 caracteres.';
+            err.style.display = 'block';
+            return;
+        }
+        try {
+            const data = await API.registro({ nombre, apellido, email, password: pass, telefono: tel });
+            if (data.error) {
+                err.textContent = data.error;
+                err.style.display = 'block';
+                return;
+            }
+            ok.textContent = '¡Cuenta creada! Ahora puedes iniciar sesión.';
+            ok.style.display = 'block';
+            setTimeout(() => mostrarTab('login'), 1500);
+        } catch (e) {
+            err.textContent = 'Error al conectar con el servidor.';
+            err.style.display = 'block';
+        }
+    }
+</script>
+</body>
+</html>
