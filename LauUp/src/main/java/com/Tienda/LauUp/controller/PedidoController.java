@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.Tienda.LauUp.model.Pedido;
@@ -61,17 +62,17 @@ public class PedidoController {
 	
 	@PatchMapping("/{id}/estado")
 	public ResponseEntity<?> cambiarEstado(@PathVariable Long id,
-			@RequestBody String estado){
-		try {
-			Pedido.Estado nuevoEstado = Pedido.Estado.valueOf(estado.toUpperCase());
-			return ResponseEntity.ok(pedidoService.cambiarEstado(id, nuevoEstado));
-			
-		} catch (Exception e) {
-			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
-		}
-			
-		
+	                                       @RequestParam String estado){
+	    try {
+	        Pedido.Estado nuevoEstado = Pedido.Estado.valueOf(estado.toUpperCase());
+	        pedidoService.cambiarEstado(id, nuevoEstado);
+	        return ResponseEntity.ok(Map.of("mensaje", "Estado actualizado"));
+	        
+	    } catch (Exception e) {
+	        return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+	    }
 	}
+	
 	
 	@PatchMapping("/{id}/cancelar")
 	public ResponseEntity<?> cancelar(@PathVariable Long id) {

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin | Lau & Up.</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <a href="index.html" class="logo">✦ Lau &amp; Up. <span class="admin-tag">ADMIN</span></a>
+        <nav class="nav">
+            <a href="index.html" class="nav-link">Ver tienda</a>
+        </nav>
+        <div class="header-actions">
+            <button class="btn-outline" onclick="cerrarSesion()">Cerrar sesión</button>
+        </div>
+    </div>
+</header>
+
+<div class="admin-layout">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+        <nav class="admin-nav">
+            <a href="#" class="admin-link active" onclick="mostrarSeccion('productos')">📦 Productos</a>
+            <a href="#" class="admin-link" onclick="mostrarSeccion('pedidos')">📋 Pedidos</a>
+            <a href="#" class="admin-link" onclick="mostrarSeccion('categorias')">🏷️ Categorías</a>
+        </nav>
+    </aside>
+
+    <main class="admin-main">
+
+        <!-- ── PRODUCTOS ── -->
+        <section id="sec-productos" class="admin-seccion">
+            <div class="admin-sec-header">
+                <h2>Gestión de Productos</h2>
+                <button class="btn-primary" onclick="abrirModalProducto()">+ Nuevo producto</button>
+            </div>
+            <div class="tabla-wrap">
+                <table class="admin-tabla">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                            <th>Stock</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-productos"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ── PEDIDOS ── -->
+        <section id="sec-pedidos" class="admin-seccion" style="display:none">
+            <div class="admin-sec-header">
+                <h2>Gestión de Pedidos</h2>
+            </div>
+            <div class="tabla-wrap">
+                <table class="admin-tabla">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Usuario</th>
+                            <th>Total</th>
+                            <th>Estado</th>
+                            <th>Fecha</th>
+                            <th>Cambiar estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-pedidos"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ── CATEGORIAS ── -->
+        <section id="sec-categorias" class="admin-seccion" style="display:none">
+            <div class="admin-sec-header">
+                <h2>Gestión de Categorías</h2>
+                <button class="btn-primary" onclick="abrirModalCategoria()">+ Nueva categoría</button>
+            </div>
+            <div class="tabla-wrap">
+                <table class="admin-tabla">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-categorias"></tbody>
+                </table>
+            </div>
+        </section>
+
+    </main>
+</div>
+
+<!-- Modal producto -->
+<div class="modal-overlay" id="modal-producto" style="display:none">
+    <div class="modal modal-grande">
+        <h3 id="modal-titulo">Nuevo producto</h3>
+        <input type="hidden" id="prod-id"/>
+        <div class="form-row">
+            <label class="form-label">Nombre
+                <input type="text" id="prod-nombre" class="form-input"/>
+            </label>
+            <label class="form-label">Precio (COP)
+                <input type="number" id="prod-precio" class="form-input"/>
+            </label>
+        </div>
+        <div class="form-row">
+            <label class="form-label">Stock
+                <input type="number" id="prod-stock" class="form-input"/>
+            </label>
+            <label class="form-label">Categoría
+                <select id="prod-categoria" class="form-input"></select>
+            </label>
+        </div>
+        <label class="form-label">Descripción
+            <textarea id="prod-descripcion" class="form-input" rows="3"></textarea>
+        </label>
+        <label class="form-label">URL de imagen (opcional) <!-- no tengo imagenes en img, entonces lo coloco opcional por ahora-->
+            <input type="text" id="prod-imagen" class="form-input" placeholder="https://..."/>
+        </label>
+        <div class="modal-actions">
+            <button class="btn-outline" onclick="cerrarModalProducto()">Cancelar</button>
+            <button class="btn-primary" onclick="guardarProducto()">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal categoría -->
+<div class="modal-overlay" id="modal-categoria" style="display:none">
+    <div class="modal">
+        <h3>Nueva categoría</h3>
+        <label class="form-label">Nombre
+            <input type="text" id="cat-nombre" class="form-input"/>
+        </label>
+        <label class="form-label">Descripción
+            <input type="text" id="cat-descripcion" class="form-input"/>
+        </label>
+        <div class="modal-actions">
+            <button class="btn-outline" onclick="cerrarModalCategoria()">Cancelar</button>
+            <button class="btn-primary" onclick="guardarCategoria()">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/api.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

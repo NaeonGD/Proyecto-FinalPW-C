@@ -48,7 +48,7 @@ public class Pedido {
 	private Estado estado = Estado.PENDIENTE;
 	
 	@Column(name = "direccion_envio", columnDefinition = "TEXT")
-	private String dirrecionEnvio;
+	private String direccionEnvio;
 	
 	@OneToMany(mappedBy = "pedido", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<DetallePedido> detalles = new ArrayList<>();

@@ -27,7 +27,7 @@ public class PedidoService {
 	private final UsuarioRepository usuarioRepository;
 	
 	@Transactional
-	public Pedido crearPedido(Long usuarioId, Map<Long, Integer> carrito, String dirreccionEnvio) {
+	public Pedido crearPedido(Long usuarioId, Map<Long, Integer> carrito, String direccionEnvio) {
 		
 		
 	Usuario usuario = usuarioRepository.findById(usuarioId)
@@ -36,7 +36,7 @@ public class PedidoService {
 		
 	Pedido pedido = new Pedido();
 		pedido.setUsuario(usuario);
-		pedido.setDirrecionEnvio(dirreccionEnvio);
+		pedido.setDireccionEnvio(direccionEnvio);
 		
 		BigDecimal total = BigDecimal.ZERO;
 		
