@@ -114,26 +114,56 @@
             contenedor.innerHTML = '<p class="text-muted">Aún no tienes pedidos.</p>';
             return;
         }
-        contenedor.innerHTML = pedidos.map(p => `
-            <div class="pedido-card">
-                <div class="pedido-header">
-                    <span><strong>Pedido #${p.id}</strong></span>
-                    <span class="badge-estado estado-${p.estado.toLowerCase()}">${p.estado}</span>
+        contenedor.innerHTML = pedidos.map(p => {
+            // Calcular si han pasado menos de 60 minutos
+            const creado    = new Date(p.creadoEn);
+            const ahora     = new Date();
+            const minutos   = (ahora - creado) / 1000 / 60;
+            const puedeCancelar = p.estado === 'PENDIENTE' && minutos < 60;
+
+            return `
+                <div class="pedido-card">
+                    <div class="pedido-header">
+                        <span><strong>Pedido #${p.id}</strong></span>
+                        <span class="badge-estado estado-${p.estado.toLowerCase()}">${p.estado}</span>
+                    </div>
+                    <p class="text-muted">${new Date(p.creadoEn).toLocaleDateString('es-CO', {dateStyle:'long'})}</p>
+                    <div class="pedido-items">
+                        ${p.detalles.map(d => `
+                            <div class="pedido-item">
+                                <span>${d.producto.nombre} x${d.cantidad}</span>
+                                <span>${formatPrecio(d.precioUnit * d.cantidad)}</span>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="pedido-footer-row">
+                        <strong>Total: ${formatPrecio(p.total)}</strong>
+                        ${puedeCancelar ? `
+                            <button class="btn-cancelar" onclick="cancelarPedido(${p.id})">
+                                Cancelar pedido
+                            </button>
+                        ` : ''}
+                    </div>
                 </div>
-                <p class="text-muted">${new Date(p.creadoEn).toLocaleDateString('es-CO', {dateStyle:'long'})}</p>
-                <div class="pedido-items">
-                    ${p.detalles.map(d => `
-                        <div class="pedido-item">
-                            <span>${d.producto.nombre} x${d.cantidad}</span>
-                            <span>${formatPrecio(d.precioUnit * d.cantidad)}</span>
-                        </div>
-                    `).join('')}
-                </div>
-                <div class="pedido-total">
-                    <strong>Total: ${formatPrecio(p.total)}</strong>
-                </div>
-            </div>
-        `).join('');
+            `;
+        }).join('');
+    }
+
+    async function cancelarPedido(id) {
+        if (!confirm('¿Estás segura que quieres cancelar este pedido?')) return;
+        try {
+            const res = await fetch('http://localhost:8080/api/pedidos/' + id + '/cancelar', {
+                method: 'PATCH'
+            });
+            const data = await res.json();
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+            cargarPedidos(); // Recargar la lista
+        } catch (e) {
+            alert('Error al cancelar el pedido.');
+        }
     }
 
     function formatPrecio(n) {

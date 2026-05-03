@@ -273,3 +273,25 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
     .carrito-panel { width: 100%; right: -100%; }
     .header-inner { padding: .8rem 1rem; }
 }
+/* __ Boton Cancelar Pedido _____________________________________________*/
+.pedido-footer-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: .5rem;
+}
+.btn-cancelar {
+    padding: .45rem 1rem;
+    background: transparent;
+    border: 1.5px solid #b91c1c;
+    color: #b91c1c;
+    border-radius: 50px;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--trans);
+}
+.btn-cancelar:hover {
+    background: #b91c1c;
+    color: #fff;
+}

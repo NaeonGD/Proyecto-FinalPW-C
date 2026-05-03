@@ -1,5 +1,7 @@
 package com.Tienda.LauUp.controller;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,5 +71,40 @@ public class PedidoController {
 		}
 			
 		
+	}
+	
+	@PatchMapping("/{id}/cancelar")
+	public ResponseEntity<?> cancelar(@PathVariable Long id) {
+	    try {
+	        return pedidoService.buscarPorId(id).map(pedido -> {
+	            // Verificar que no haya pasado más de 1 hora
+	            long minutos = Duration.between(
+	                pedido.getCreadoEn(), 
+	                LocalDateTime.now()
+	            ).toMinutes();
+
+	            if (minutos > 60) {
+	                return ResponseEntity.badRequest()
+	                    .body(Map.of("error", "No puedes cancelar un pedido después de 1 hora."));
+	            }
+	            if (pedido.getEstado() != Pedido.Estado.PENDIENTE) {
+	                return ResponseEntity.badRequest()
+	                    .body(Map.of("error", "Solo puedes cancelar pedidos pendientes."));
+	            }
+
+	            // Devolver stock
+	            pedido.getDetalles().forEach(d -> {
+	                d.getProducto().setStock(
+	                    d.getProducto().getStock() + d.getCantidad()
+	                );
+	            });
+
+	            return ResponseEntity.ok(
+	                pedidoService.cambiarEstado(id, Pedido.Estado.CANCELADO)
+	            );
+	        }).orElse(ResponseEntity.notFound().build());
+	    } catch (Exception e) {
+	        return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
+	    }
 	}
 }
