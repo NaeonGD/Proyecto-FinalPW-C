@@ -7,6 +7,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,6 +37,7 @@ public class Pedido {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "usuario_id", nullable = false)
+	@JsonIgnore
 	private Usuario usuario;
 	
 	@Column(nullable = false, precision = 10, scale = 2)

@@ -31,14 +31,15 @@ public class PedidoController {
 	public ResponseEntity<?> crear(@RequestBody Map<String, Object> body){
 		try {
 			Long usuarioId = Long.valueOf(body.get("usuarioId").toString());
-			String dirrecion = body.get("dirrecionEnvio").toString();
+			Object direccionObj = body.get("direccionEnvio");
+			String direccion = direccionObj != null ? direccionObj.toString() : "";
 			
 			@SuppressWarnings("unchecked")
 			Map<String, Integer> raw = (Map<String, Integer>) body.get("carrito");
 			Map<Long, Integer> carrito = new HashMap<>();
 			raw.forEach((t, u) -> carrito.put(Long.valueOf(t), u));
 			
-			Pedido pedido = pedidoService.crearPedido(usuarioId, carrito, dirrecion);
+			Pedido pedido = pedidoService.crearPedido(usuarioId, carrito, direccion);
 			return ResponseEntity.ok(pedido);
 		}catch(RuntimeException e){
 			return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));

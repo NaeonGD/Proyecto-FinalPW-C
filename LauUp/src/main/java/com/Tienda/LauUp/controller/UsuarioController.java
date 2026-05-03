@@ -25,7 +25,7 @@ public class UsuarioController {
 	
 	private final UsuarioService usuarioService;
 	
-	@PostMapping
+	@PostMapping("/registro")
 	public ResponseEntity<?> registro(@RequestBody Usuario usuario){
 		try {
 			Usuario creado = usuarioService.registrar(usuario);
@@ -58,7 +58,7 @@ public class UsuarioController {
 				.orElse(ResponseEntity.notFound().build());
 	}
 	
-	@PutMapping
+	@PutMapping("/{id}")
 	public ResponseEntity<Usuario> actualizar(@PathVariable Long id, @RequestBody Usuario datos){
 		return usuarioService.buscarPorId(id).map(u -> {
             u.setNombre(datos.getNombre());
