@@ -1,10 +1,7 @@
 package com.Tienda.LauUp.controller;
 
-import java.util.Map;
+import java.util.Map; 
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,8 +26,6 @@ public class UsuarioController {
 	
 	private final UsuarioService usuarioService;
 	private final JwtUtil jwtUtil; // para el jwt
-	@Autowired
-	private MessageSource	 messageSource; //Para el coso de Internacionalizancion
 	
 	@PostMapping("/registro")
 	public ResponseEntity<?> registro(@RequestBody Usuario usuario){
@@ -56,7 +51,7 @@ public class UsuarioController {
 	                return ResponseEntity.ok((Object) respuesta);
 	            })
 	            .orElse(ResponseEntity.status(401)
-	                    .body(Map.of("error", messageSource.getMessage("error.credenciales", null, LocaleContextHolder.getLocale()))));
+	                    .body(Map.of("error", "Credenciales incorrectas")));
 	}
 	
 	@GetMapping("/{id}")

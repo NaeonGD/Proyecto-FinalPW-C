@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +29,6 @@ import lombok.RequiredArgsConstructor;
 public class PedidoController {
 
 	private final PedidoService pedidoService;
-	@Autowired
-	private MessageSource messageSource; //Internacionalizacion
 	
 	@PostMapping
 	public ResponseEntity<?> crear(@RequestBody Map<String, Object> body){
@@ -46,7 +41,7 @@ public class PedidoController {
 			Map<String, Integer> raw = (Map<String, Integer>) body.get("carrito");
 			Map<Long, Integer> carrito = new HashMap<>();
 			raw.forEach((t, u) -> carrito.put(Long.valueOf(t), u));
-				
+			
 			Pedido pedido = pedidoService.crearPedido(usuarioId, carrito, direccion);
 			return ResponseEntity.ok(pedido);
 		}catch(RuntimeException e){
@@ -71,8 +66,7 @@ public class PedidoController {
 	    try {
 	        Pedido.Estado nuevoEstado = Pedido.Estado.valueOf(estado.toUpperCase());
 	        pedidoService.cambiarEstado(id, nuevoEstado);
-	        return ResponseEntity.ok(Map.of("mensaje",
-	        		messageSource.getMessage("pedido.estado.actualizado", null, LocaleContextHolder.getLocale())));
+	        return ResponseEntity.ok(Map.of("mensaje", "Estado actualizado"));
 	        
 	    } catch (Exception e) {
 	        return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
@@ -92,13 +86,11 @@ public class PedidoController {
 
 	            if (minutos > 60) {
 	                return ResponseEntity.badRequest()
-	                    .body(Map.of("error",
-	                    		messageSource.getMessage("error.cancelar.tiempo",null, LocaleContextHolder.getLocale())));
+	                    .body(Map.of("error", "No puedes cancelar un pedido después de 1 hora."));
 	            }
 	            if (pedido.getEstado() != Pedido.Estado.PENDIENTE) {
 	                return ResponseEntity.badRequest()
-	                    .body(Map.of("error",
-	                    		messageSource.getMessage("error.cancelar.estado", null, LocaleContextHolder.getLocale())));
+	                    .body(Map.of("error", "Solo puedes cancelar pedidos pendientes."));
 	            }
 
 	            // Devolver stock

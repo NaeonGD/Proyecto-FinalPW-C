@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.Tienda.LauUp.model.DetallePedido;
@@ -27,16 +25,13 @@ public class PedidoService {
 	private final PedidoRepository pedidoRepository;
 	private final ProductoRepository productoRepository;
 	private final UsuarioRepository usuarioRepository;
-	private final MessageSource messageSource;
 	
 	@Transactional
 	public Pedido crearPedido(Long usuarioId, Map<Long, Integer> carrito, String direccionEnvio) {
 		
 		
 	Usuario usuario = usuarioRepository.findById(usuarioId)
-				.orElseThrow(() -> new RuntimeException(messageSource.
-						getMessage("error.usuario.noEncontrado", null, LocaleContextHolder.getLocale())
-			            ));
+				.orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
 		
 		
 	Pedido pedido = new Pedido();
@@ -50,15 +45,10 @@ public class PedidoService {
 			Integer cantidad = entry.getValue();
 			
 			Producto producto = productoRepository.findById(productoId)
-					.orElseThrow(() -> new RuntimeException(messageSource.
-							getMessage("error.producto.noEncontrado", null, LocaleContextHolder.getLocale())
-			                ));
+					.orElseThrow(() -> new RuntimeException("Producto no encontrado"));
 			
 			if (producto.getStock()< cantidad) {
-				throw new RuntimeException(messageSource.
-						getMessage("error.stock.insuficiente", new Object[]{producto.getNombre()}, 
-								LocaleContextHolder.getLocale())
-		                 );
+				throw new RuntimeException("Stock insuficiente: "+ producto.getNombre());
 			}
 			
 			
@@ -93,9 +83,7 @@ public class PedidoService {
 	
 	public Pedido cambiarEstado(Long pedidoId, Pedido.Estado nuevoEstado) {
 		Pedido pedido = pedidoRepository.findById(pedidoId)
-				.orElseThrow(() -> new RuntimeException(messageSource.
-						getMessage("error.pedido.noEncontrado", null, LocaleContextHolder.getLocale())
-			            ));
+				.orElseThrow(() -> new RuntimeException("Pedido no encontrado"));
 		pedido.setEstado(nuevoEstado);
 		return pedidoRepository.save(pedido);
 	}
