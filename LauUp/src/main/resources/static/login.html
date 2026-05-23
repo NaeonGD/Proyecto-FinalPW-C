@@ -92,7 +92,7 @@
                 err.style.display = 'block';
                 return;
             }
-            guardarAuth(data);
+            guardarAuth(data);  // ← ahora guarda { token, usuario }
             window.location.href = 'index.html';
         } catch (e) {
             err.textContent = 'Error al conectar con el servidor.';

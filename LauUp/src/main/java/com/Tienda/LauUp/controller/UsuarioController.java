@@ -1,6 +1,6 @@
 package com.Tienda.LauUp.controller;
 
-import java.util.Map;
+import java.util.Map; 
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.Tienda.LauUp.config.JwtUtil;
 import com.Tienda.LauUp.model.Usuario;
 import com.Tienda.LauUp.service.UsuarioService;
 
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class UsuarioController {
 	
 	private final UsuarioService usuarioService;
+	private final JwtUtil jwtUtil; // para el jwt
 	
 	@PostMapping("/registro")
 	public ResponseEntity<?> registro(@RequestBody Usuario usuario){
@@ -38,14 +40,18 @@ public class UsuarioController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody Map<String, String> body){
-		return usuarioService.login(body.get("email"), body.get("password"))
-				.map(u -> {
-					u.setPassword(null);
-					return ResponseEntity.ok((Object) u);
-				})
-				.orElse(ResponseEntity.status(401)
-						.body(Map.of("error", "Correo o Contraseña incorrectos")));
+	public ResponseEntity<?> login(@RequestBody Map<String, String> body) {
+	    return usuarioService.login(body.get("email"), body.get("password"))
+	            .map(u -> {
+	                String token = jwtUtil.generarToken(u.getEmail(), u.getRol().name());
+	                u.setPassword(null);
+	                Map<String, Object> respuesta = new java.util.HashMap<>();
+	                respuesta.put("token", token);
+	                respuesta.put("usuario", u);
+	                return ResponseEntity.ok((Object) respuesta);
+	            })
+	            .orElse(ResponseEntity.status(401)
+	                    .body(Map.of("error", "Credenciales incorrectas")));
 	}
 	
 	@GetMapping("/{id}")

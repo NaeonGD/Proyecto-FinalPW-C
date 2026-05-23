@@ -1,12 +1,20 @@
-// auth.js — Manejo de sesión del usuario
+// auth.js — Manejo de sesión del usuario con JWT
 
 function authActual() {
-    try { return JSON.parse(localStorage.getItem('belleza_user')); }
-    catch { return null; }
+    try {
+        const data = JSON.parse(localStorage.getItem('belleza_user'));
+        if (!data || !data.token) return null;
+        return data;
+    } catch { return null; }
 }
 
-function guardarAuth(usuario) {
-    localStorage.setItem('belleza_user', JSON.stringify(usuario));
+function guardarAuth(data) {
+    // data tiene { token, usuario }
+    const guardar = {
+        ...data.usuario,
+        token: data.token
+    };
+    localStorage.setItem('belleza_user', JSON.stringify(guardar));
 }
 
 function renderNavAuth() {
