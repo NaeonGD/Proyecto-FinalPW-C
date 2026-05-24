@@ -35,7 +35,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String token = jwtUtil.generarToken(email, usuario.getRol().name());
 
         // Redirigir al frontend con el token en la URL
-        String redirectUrl = "http://localhost:8080/oauth2-callback.html" +
+        String redirectUrl = "https://localhost:8443/oauth2-callback.html" +
                 "?token=" + token +
                 "&id=" + usuario.getId() +
                 "&nombre=" + usuario.getNombre() +

@@ -9,7 +9,7 @@ const I18N = {
         localStorage.setItem('belleza_lang', this.idiomaActual);
 
         try {
-            const res = await fetch(`http://localhost:8080/api/i18n/${this.idiomaActual}`);
+            const res = await fetch(`https://localhost:8443/api/i18n/${this.idiomaActual}`);
             this.mensajes = await res.json();
             this.aplicar();
         } catch (e) {
