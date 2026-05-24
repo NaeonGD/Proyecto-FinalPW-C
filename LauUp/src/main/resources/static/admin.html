@@ -21,7 +21,7 @@
        			<button class="lang-btn" data-lang="en" onclick="I18N.cambiar('en')">EN</button>
        			<button class="lang-btn" data-lang="fr" onclick="I18N.cambiar('fr')">FR</button>
     		</div>
-            <button class="btn-outline" onclick="cerrarSesion()" data-i18n="perfil.cerrar">Cerrar sesión</button>
+            <button class="btn-outline" onclick="cerrarSesion()"><span data-i18n="perfil.cerrar">Cerrar sesión</span></button>
         </div>
     </div>
 </header>
@@ -42,18 +42,19 @@
         <!-- ── PRODUCTOS ── -->
         <section id="sec-productos" class="admin-seccion">
             <div class="admin-sec-header">
-                <h2 data-i18n="admin.gestionProductos">Gestión de Productos</h2>
-                <button class="btn-primary" onclick="abrirModalProducto()" data-i18n="admin.nuevoProducto">+ Nuevo producto</button>
+                <h2 ><span data-i18n="admin.gestionProductos">Gestión de Productos</span></h2>
+                <button class="btn-primary" onclick="abrirModalProducto()"><span data-i18n="admin.nuevoProducto">+ Nuevo producto</span></button>
             </div>
             <div class="tabla-wrap">
                 <table class="admin-tabla">
                     <thead>
                         <tr>
-                            <th data-i18n="admin.nombre">Nombre</th>
-							<th data-i18n="admin.categoria">Categoría</th>
-							<th data-i18n="admin.precio">Precio</th>
-							<th data-i18n="admin.stock">Stock</th>
-							<th data-i18n="admin.acciones">Acciones</th>
+                        	<th>ID</th>
+                            <th ><span data-i18n="admin.nombre">Nombre</span></th>
+							<th ><span data-i18n="admin.categoria">Categoría</span></th>
+							<th ><span data-i18n="admin.precio">Precio</span></th>
+							<th ><span data-i18n="admin.stock">Stock</span></th>
+							<th ><span data-i18n="admin.acciones">Acciones</span></th>
                         </tr>
                     </thead>
                     <tbody id="tabla-productos"></tbody>
@@ -64,18 +65,18 @@
         <!-- ── PEDIDOS ── -->
         <section id="sec-pedidos" class="admin-seccion" style="display:none">
             <div class="admin-sec-header">
-                <h2 data-i18n="admin.gestionPedidos">Gestión de Pedidos</h2>
+                <h2 ><span data-i18n="admin.gestionPedidos">Gestión de Pedidos</span></h2>
             </div>
             <div class="tabla-wrap">
                 <table class="admin-tabla">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th data-i18n="admin.usuario">Usuario</th>
-                            <th data-i18n="admin.total">Total</th>
-                            <th data-i18n="admin.estado">Estado</th>
-                            <th data-i18n="admin.fecha">Fecha</th>
-                            <th data-i18n="admin.cambiarEstado">Cambiar estado</th>
+                            <th ><span data-i18n="admin.usuario">Usuario</span></th>
+                            <th ><span data-i18n="admin.total">Total</span></th>
+                            <th ><span data-i18n="admin.estado">Estado</span></th>
+                            <th ><span data-i18n="admin.fecha">Fecha</span></th>
+                            <th ><span data-i18n="admin.cambiarEstado">Cambiar estado</span></th>
                         </tr>
                     </thead>
                     <tbody id="tabla-pedidos"></tbody>
@@ -86,16 +87,16 @@
         <!-- ── CATEGORIAS ── -->
         <section id="sec-categorias" class="admin-seccion" style="display:none">
             <div class="admin-sec-header">
-                <h2 data-i18n="admin.gestionCategorias">Gestión de Categorías</h2>
-                <button class="btn-primary" onclick="abrirModalCategoria()" data-i18n="admin.nuevaCategoria">+ Nueva categoría</button>
+                <h2 ><span data-i18n="admin.gestionCategorias">Gestión de Categorías</span></h2>
+                <button class="btn-primary" onclick="abrirModalCategoria()"><span data-i18n="admin.nuevaCategoria">+ Nueva categoría</span></button>
             </div>
             <div class="tabla-wrap">
                 <table class="admin-tabla">
                     <thead>
                         <tr>
                             <th>ID</th>
-                            <th data-i18n="admin.nombre">Nombre</th>
-                            <th data-i18n="admin.descripcion">Descripción</th>
+                            <th ><span data-i18n="admin.nombre">Nombre</span></th>
+                            <th ><span data-i18n="admin.descripcion">Descripción</span></th>
                         </tr>
                     </thead>
                     <tbody id="tabla-categorias"></tbody>
@@ -112,30 +113,30 @@
         <h3 id="modal-titulo">Nuevo producto</h3>
         <input type="hidden" id="prod-id"/>
         <div class="form-row">
-            <label class="form-label" data-i18n="admin.nombre">Nombre
+            <label class="form-label"><span data-i18n="admin.nombre">Nombre</span>
                 <input type="text" id="prod-nombre" class="form-input"/>
             </label>
-            <label class="form-label" data-i18n="admin.precio">Precio (COP)
+            <label class="form-label"><span data-i18n="admin.precio">Precio (COP)</span>
                 <input type="number" id="prod-precio" class="form-input"/>
             </label>
         </div>
         <div class="form-row">
-            <label class="form-label" data-i18n="admin.stock">Stock
+            <label class="form-label"><span data-i18n="admin.stock">Stock</span>
                 <input type="number" id="prod-stock" class="form-input"/>
             </label>
-            <label class="form-label" data-i18n="admin.categoria">Categoría
+            <label class="form-label"><span data-i18n="admin.categoria">Categoría</span>
                 <select id="prod-categoria" class="form-input"></select>
             </label>
         </div>
-        <label class="form-label" data-i18n="admin.descripcion">Descripción
+        <label class="form-label"><span data-i18n="admin.descripcion">Descripción</span>
             <textarea id="prod-descripcion" class="form-input" rows="3"></textarea>
         </label>
-        <label class="form-label" data-i18n="admin.imagen">URL de imagen (opcional) <!-- no tengo imagenes en img, entonces lo coloco opcional por ahora-->
+        <label class="form-label"><span data-i18n="admin.imagen">URL de imagen (opcional)</span> <!-- no tengo imagenes en img, entonces lo coloco opcional por ahora-->
             <input type="text" id="prod-imagen" class="form-input" placeholder="https://..."/>
         </label>
         <div class="modal-actions">
-            <button class="btn-outline" onclick="cerrarModalProducto()" data-i18n="checkout.cancelar">Cancelar</button>
-            <button class="btn-primary" onclick="guardarProducto()" data-i18n="perfil.guardar">Guardar</button>
+            <button class="btn-outline" onclick="cerrarModalProducto()"><span data-i18n="checkout.cancelar">Cancelar</span></button>
+            <button class="btn-primary" onclick="guardarProducto()"><span data-i18n="perfil.guardar">Guardar</span></button>
         </div>
     </div>
 </div>
@@ -144,10 +145,10 @@
 <div class="modal-overlay" id="modal-categoria" style="display:none">
     <div class="modal">
         <h3>Nueva categoría</h3>
-        <label class="form-label" data-i18n="admin.nombre">Nombre
+        <label class="form-label"><span data-i18n="admin.nombre">Nombre</span>
             <input type="text" id="cat-nombre" class="form-input"/>
         </label>
-        <label class="form-label" data-i18n="admin.descripcion">Descripción
+        <label class="form-label"><span data-i18n="admin.descripcion">Descripción</span>
             <input type="text" id="cat-descripcion" class="form-input"/>
         </label>
         <div class="modal-actions">

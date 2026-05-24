@@ -45,7 +45,14 @@ public class I18nController {
 	            "reg.titulo", "reg.nombre", "reg.apellido", "reg.telefono",
 	            "reg.boton", "reg.conCuenta", "reg.inicia",
 	            "perfil.titulo", "perfil.pedidos", "perfil.guardar", "perfil.cerrar",
-	            "footer.texto", "lang.es", "lang.en", "lang.fr"
+	            "footer.texto", "lang.es", "lang.en", "lang.fr","perfil.direccion",
+	            "admin.productos", "admin.pedidos", "admin.categorias",
+	            "admin.gestionProductos", "admin.gestionPedidos", "admin.gestionCategorias",
+	            "admin.nuevoProducto", "admin.nuevaCategoria",
+	            "admin.nombre", "admin.categoria", "admin.precio", "admin.stock",
+	            "admin.acciones", "admin.usuario", "admin.total", "admin.estado",
+	            "admin.fecha", "admin.cambiarEstado", "admin.descripcion",
+	            "admin.imagen", "admin.verTienda"
 	        };
 		
 		Map<String, String> mensajes = new HashMap<>();

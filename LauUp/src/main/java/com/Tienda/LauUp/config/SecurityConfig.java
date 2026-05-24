@@ -12,12 +12,16 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import com.Tienda.LauUp.service.OAuth2Service;
+
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
 
     private final JwtFilter jwtFilter;
+    private final OAuth2Service oauth2Service;
+    private final OAuth2SuccessHandler oauth2SuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -29,7 +33,7 @@ public class SecurityConfig {
         http
             .csrf(AbstractHttpConfigurer::disable)
             .sessionManagement(session -> session
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
             )
             .authorizeHttpRequests(auth -> auth
                 .requestMatchers(
@@ -45,9 +49,15 @@ public class SecurityConfig {
                 ).permitAll()
                 .anyRequest().authenticated()
             )
-            .formLogin(AbstractHttpConfigurer::disable)
-            .httpBasic(AbstractHttpConfigurer::disable)
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+             .oauth2Login(oauth2 -> oauth2
+             .userInfoEndpoint(userInfo -> userInfo
+             .userService(oauth2Service)
+             )
+             .successHandler(oauth2SuccessHandler)
+               )
+               .formLogin(AbstractHttpConfigurer::disable)
+               .httpBasic(AbstractHttpConfigurer::disable)
+               .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
         return http.build();
     }

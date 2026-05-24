@@ -28,16 +28,28 @@
     <div id="form-login" class="auth-form">
         <h2 class="auth-title" data-i18n="login.titulo">Bienvenida de vuelta ✨</h2>
         <div id="login-error" class="alert-error" style="display:none"></div>
-        <label class="form-label" data-i18n="login.email">Correo electrónico
+        <label class="form-label"><span data-i18n="login.email">Correo electrónico</span>
             <input type="email" id="login-email" class="form-input" placeholder="tu@correo.com"/>
         </label>
-        <label class="form-label" data-i18n="login.password">Contraseña
+        <label class="form-label"><span data-i18n="login.password">Contraseña</span>
             <input type="password" id="login-pass" class="form-input" placeholder="••••••••"/>
         </label>
         <button class="btn-primary w100" onclick="hacerLogin()" data-i18n="login.boton">Ingresar</button>
-        <p class="auth-switch" data-i18n="login.sinCuenta">¿No tienes cuenta?
+        <p class="auth-switch"><span data-i18n="login.sinCuenta">¿No tienes cuenta?</span>
             <a href="#" onclick="mostrarTab('registro')" data-i18n="login.registrate">Regístrate</a>
         </p>
+        <div class="separador">
+    		<span>o</span>
+		</div>
+			<a href="/oauth2/authorization/google" class="btn-google">
+    			<svg width="18" height="18" viewBox="0 0 48 48">
+        			<path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+        			<path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+        			<path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+        			<path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+    			</svg>
+    			Iniciar sesión con Google
+			</a>
     </div>
 
     <!-- REGISTRO -->
@@ -45,23 +57,23 @@
         <h2 class="auth-title" data-i18n="reg.titulo">Crea tu cuenta 💄</h2>
         <div id="reg-error" class="alert-error"  style="display:none"></div>
         <div id="reg-ok"    class="alert-success" style="display:none"></div>
-        <label class="form-label" data-i18n="reg.nombre">Nombre
+        <label class="form-label"><span data-i18n="reg.nombre">Nombre</span>
             <input type="text" id="reg-nombre" class="form-input" placeholder="María"/>
         </label>
-        <label class="form-label" data-i18n="reg.apellido">Apellido
+        <label class="form-label"><span data-i18n="reg.apellido">Apellido</span>
             <input type="text" id="reg-apellido" class="form-input" placeholder="García"/>
         </label>
-        <label class="form-label" data-i18n="login.email">Correo electrónico
+        <label class="form-label"><span data-i18n="login.email">Correo electrónico</span>
             <input type="email" id="reg-email" class="form-input" placeholder="tu@correo.com"/>
         </label>
-        <label class="form-label" data-i18n="login.password">Contraseña
+        <label class="form-label"><span data-i18n="login.password">Contraseña</span>
             <input type="password" id="reg-pass" class="form-input" placeholder="Mínimo 6 caracteres"/>
         </label>
-        <label class="form-label" data-i18n="reg.telefono">Teléfono (opcional)
+        <label class="form-label"><span data-i18n="reg.telefono">Teléfono (opcional)</span>
             <input type="tel" id="reg-tel" class="form-input" placeholder="321 000 0000"/>
         </label>
         <button class="btn-primary w100" onclick="hacerRegistro()" data-i18n="reg.boton">Crear cuenta</button>
-        <p class="auth-switch" data-i18n="reg.conCuenta">¿Ya tienes cuenta?
+        <p class="auth-switch"><span data-i18n="reg.conCuenta">¿Ya tienes cuenta?</span>
             <a href="#" onclick="mostrarTab('login')" data-i18n="reg.inicia">Inicia sesión</a>
         </p>
     </div>
