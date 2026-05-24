@@ -13,11 +13,16 @@
     <div class="header-inner">
         <a href="index.html" class="logo">✦ Lau &amp; Up.</a>
         <nav class="nav">
-            <a href="index.html" class="nav-link active">Inicio</a>
-            <a href="catalogo.html" class="nav-link">Catálogo</a>
+            <a href="index.html" class="nav-link active" data-i18n="nav.inicio">Inicio</a>
+            <a href="catalogo.html" class="nav-link" data-i18n="nav.catalogo">Catálogo</a>
             <span id="nav-auth"></span>
         </nav>
         <div class="header-actions">
+        	<div class="lang-selector">
+        		<button class="lang-btn active" data-lang="es" onclick="I18N.cambiar('es')">ES</button>
+       			<button class="lang-btn" data-lang="en" onclick="I18N.cambiar('en')">EN</button>
+       			<button class="lang-btn" data-lang="fr" onclick="I18N.cambiar('fr')">FR</button>
+    		</div>
             <button class="btn-icon" onclick="abrirCarrito()" title="Carrito">
                 🛒 <span class="badge" id="badge-carrito">0</span>
             </button>
@@ -28,15 +33,15 @@
 
 <section class="hero">
     <div class="hero-content">
-        <span class="hero-tag">Nueva colección</span>
-        <h1 class="hero-title">Tu belleza,<br/><em>tu historia.</em></h1>
-        <p class="hero-sub">Productos de belleza y cuidado personal cuidadosamente seleccionados para ti.</p>
-        <a href="catalogo.html" class="btn-primary">Ver colección →</a>
+        <span class="hero-tag" data-i18n="hero.tag">Nueva colección</span>
+        <h1 class="hero-title" data-i18n="hero.titulo">Tu belleza,<br/><em>tu historia.</em></h1>
+        <p class="hero-sub" data-i18n="hero.subtitulo">Productos de belleza y cuidado personal cuidadosamente seleccionados para ti.</p>
+        <a href="catalogo.html" class="btn-primary" data-i18n="hero.boton">Ver colección →</a>
     </div>
 </section>
 
 <section class="section">
-    <h2 class="section-title">Explora por categoría</h2>
+    <h2 class="section-title" data-i18n="sec.categorias">Explora por categoría</h2>
     <div class="categorias-grid" id="categorias-grid">
         <div class="skeleton-card"></div>
         <div class="skeleton-card"></div>
@@ -46,7 +51,7 @@
 </section>
 
 <section class="section section-alt">
-    <h2 class="section-title">Productos destacados</h2>
+    <h2 class="section-title" data-i18n="sec.destacados">Productos destacados</h2>
     <div class="productos-grid" id="productos-grid">
         <div class="skeleton-card"></div>
         <div class="skeleton-card"></div>
@@ -54,46 +59,47 @@
         <div class="skeleton-card"></div>
     </div>
     <div style="text-align:center;margin-top:2rem">
-        <a href="catalogo.html" class="btn-outline">Ver todos los productos</a>
+        <a href="catalogo.html" class="btn-outline" data-i18n="sec.verTodos">Ver todos los productos</a>
     </div>
 </section>
 
 <footer class="footer">
     <div class="footer-inner">
         <span class="logo">✦ Lau &amp; Up.</span>
-        <p>© 2026 · Proyecto Programación Web · USCO</p>
+        <p data-i18n="footer.texto">© 2026 · Proyecto Programación Web · USCO</p>
     </div>
 </footer>
 
 <div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
 <aside class="carrito-panel" id="carrito-panel">
     <div class="carrito-header">
-        <h3>Tu carrito</h3>
+        <h3 data-i18n="carrito.titulo">Tu carrito</h3>
         <button onclick="cerrarCarrito()" class="btn-cerrar">✕</button>
     </div>
     <div class="carrito-items" id="carrito-items"></div>
     <div class="carrito-footer">
         <div class="carrito-total">
-            <span>Total</span>
+            <span data-i18n="carrito.total">Total</span>
             <strong id="carrito-total-val">$0</strong>
         </div>
-        <button class="btn-primary w100" onclick="checkout()">Proceder al pago</button>
+        <button class="btn-primary w100" onclick="checkout()" data-i18n="carrito.pagar">Proceder al pago</button>
     </div>
 </aside>
 
 <div class="modal-overlay" id="modal-checkout" style="display:none">
     <div class="modal">
-        <h3>Confirmar pedido</h3>
-        <label>Dirección de envío
+        <h3 data-i18n="checkout.titulo">Confirmar pedido</h3>
+        <label data-i18n="checkout.direccion">Dirección de envío
             <input type="text" id="input-direccion" placeholder="Calle 12 #34-56, Neiva"/>
         </label>
         <div class="modal-actions">
-            <button class="btn-outline" onclick="cerrarCheckout()">Cancelar</button>
-            <button class="btn-primary" onclick="confirmarPedido()">Confirmar</button>
+            <button class="btn-outline" onclick="cerrarCheckout()" data-i18n="checkout.cancelar">Cancelar</button>
+            <button class="btn-primary" onclick="confirmarPedido()" data-i18n="checkout.confirmar">Confirmar</button>
         </div>
     </div>
 </div>
 
+<script src="js/i18n.js"></script> 
 <script src="js/api.js"></script>
 <script src="js/carrito.js"></script>
 <script src="js/auth.js"></script>

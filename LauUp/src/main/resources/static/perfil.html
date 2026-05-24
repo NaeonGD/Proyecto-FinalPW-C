@@ -13,10 +13,15 @@
     <div class="header-inner">
         <a href="index.html" class="logo">✦ Lau &amp; Up.</a>
         <nav class="nav">
-            <a href="index.html" class="nav-link">Inicio</a>
-            <a href="catalogo.html" class="nav-link">Catálogo</a>
+            <a href="index.html" class="nav-link" data-i18n="nav.inicio">Inicio</a>
+            <a href="catalogo.html" class="nav-link" data-i18n="nav.catalogo">Catálogo</a>
         </nav>
         <div class="header-actions">
+        <div class="lang-selector">
+        		<button class="lang-btn active" data-lang="es" onclick="I18N.cambiar('es')">ES</button>
+       			<button class="lang-btn" data-lang="en" onclick="I18N.cambiar('en')">EN</button>
+       			<button class="lang-btn" data-lang="fr" onclick="I18N.cambiar('fr')">FR</button>
+    		</div>
             <button class="btn-icon" onclick="window.location='catalogo.html'">🛒</button>
         </div>
     </div>
@@ -28,42 +33,42 @@
         <h3 id="perfil-nombre">Cargando...</h3>
         <p id="perfil-email" class="text-muted"></p>
         <nav class="perfil-nav">
-            <a href="#" class="perfil-link active" onclick="mostrarSeccion('datos')">Mi perfil</a>
-            <a href="#" class="perfil-link" onclick="mostrarSeccion('pedidos')">Mis pedidos</a>
-            <a href="#" class="perfil-link peligro" onclick="cerrarSesion()">Cerrar sesión</a>
+            <a href="#" class="perfil-link active" onclick="mostrarSeccion('datos')" data-i18n="perfil.titulo">Mi perfil</a>
+            <a href="#" class="perfil-link" onclick="mostrarSeccion('pedidos')" data-i18n="perfil.pedidos">Mis pedidos</a>
+            <a href="#" class="perfil-link peligro" onclick="cerrarSesion()" data-i18n="perfil.cerrar">Cerrar sesión</a>
         </nav>
     </aside>
 
     <main class="perfil-main">
         <!-- Datos personales -->
         <section id="sec-datos" class="perfil-seccion">
-            <h2 class="section-title" style="text-align:left">Mis datos</h2>
+            <h2 class="section-title" style="text-align:left" data-i18n="perfil.titulo">Mis datos</h2>
             <div id="datos-ok" class="alert-success" style="display:none">
                 Datos guardados correctamente.
             </div>
             <div class="form-row">
-                <label class="form-label">Nombre
+                <label class="form-label" data-i18n="reg.nombre">Nombre
                     <input type="text" id="p-nombre" class="form-input"/>
                 </label>
-                <label class="form-label">Apellido
+                <label class="form-label" data-i18n="reg.apellido">Apellido
                     <input type="text" id="p-apellido" class="form-input"/>
                 </label>
             </div>
-            <label class="form-label">Correo (no editable)
+            <label class="form-label" data-i18n="login.email">Correo (no editable)
                 <input type="email" id="p-email" class="form-input" disabled/>
             </label>
-            <label class="form-label">Teléfono
+            <label class="form-label" data-i18n="reg.telefono">Teléfono
                 <input type="tel" id="p-tel" class="form-input"/>
             </label>
-            <label class="form-label">Dirección
+            <label class="form-label" data-i18n="perfil.direccion">Dirección
                 <input type="text" id="p-dir" class="form-input"/>
             </label>
-            <button class="btn-primary" onclick="guardarPerfil()">Guardar cambios</button>
+            <button class="btn-primary" onclick="guardarPerfil()" data-i18n="perfil.guardar">Guardar cambios</button>
         </section>
 
         <!-- Pedidos -->
         <section id="sec-pedidos" class="perfil-seccion" style="display:none">
-            <h2 class="section-title" style="text-align:left">Mis pedidos</h2>
+            <h2 class="section-title" style="text-align:left" data-i18n="perfil.pedidos">Mis pedidos</h2>
             <div id="lista-pedidos">
                 <p class="text-muted">Cargando pedidos...</p>
             </div>
@@ -71,6 +76,7 @@
     </main>
 </div>
 
+<script src="js/i18n.js"></script>
 <script src="js/api.js"></script>
 <script src="js/auth.js"></script>
 <script>

@@ -13,55 +13,61 @@
     <a href="index.html" class="logo" style="display:block;text-align:center;margin-bottom:2rem">
         ✦ Lau &amp; Up.
     </a>
+    <div class="lang-selector" style="justify-content:center;margin-bottom:1.5rem">
+    	<button class="lang-btn active" data-lang="es" onclick="I18N.cambiar('es')">ES</button>
+    	<button class="lang-btn" data-lang="en" onclick="I18N.cambiar('en')">EN</button>
+    	<button class="lang-btn" data-lang="fr" onclick="I18N.cambiar('fr')">FR</button>
+	</div>
 
     <div class="auth-tabs">
-        <button class="auth-tab active" id="tab-login" onclick="mostrarTab('login')">Iniciar sesión</button>
-        <button class="auth-tab" id="tab-registro" onclick="mostrarTab('registro')">Registrarse</button>
+        <button class="auth-tab active" id="tab-login" onclick="mostrarTab('login')" data-i18n="nav.ingresar">Iniciar sesión</button>
+        <button class="auth-tab" id="tab-registro" onclick="mostrarTab('registro')" data-i18n="reg.boton">Registrarse</button>
     </div>
 
     <!-- LOGIN -->
     <div id="form-login" class="auth-form">
-        <h2 class="auth-title">Bienvenida de vuelta ✨</h2>
+        <h2 class="auth-title" data-i18n="login.titulo">Bienvenida de vuelta ✨</h2>
         <div id="login-error" class="alert-error" style="display:none"></div>
-        <label class="form-label">Correo electrónico
+        <label class="form-label" data-i18n="login.email">Correo electrónico
             <input type="email" id="login-email" class="form-input" placeholder="tu@correo.com"/>
         </label>
-        <label class="form-label">Contraseña
+        <label class="form-label" data-i18n="login.password">Contraseña
             <input type="password" id="login-pass" class="form-input" placeholder="••••••••"/>
         </label>
-        <button class="btn-primary w100" onclick="hacerLogin()">Ingresar</button>
-        <p class="auth-switch">¿No tienes cuenta?
-            <a href="#" onclick="mostrarTab('registro')">Regístrate</a>
+        <button class="btn-primary w100" onclick="hacerLogin()" data-i18n="login.boton">Ingresar</button>
+        <p class="auth-switch" data-i18n="login.sinCuenta">¿No tienes cuenta?
+            <a href="#" onclick="mostrarTab('registro')" data-i18n="login.registrate">Regístrate</a>
         </p>
     </div>
 
     <!-- REGISTRO -->
     <div id="form-registro" class="auth-form" style="display:none">
-        <h2 class="auth-title">Crea tu cuenta 💄</h2>
+        <h2 class="auth-title" data-i18n="reg.titulo">Crea tu cuenta 💄</h2>
         <div id="reg-error" class="alert-error"  style="display:none"></div>
         <div id="reg-ok"    class="alert-success" style="display:none"></div>
-        <label class="form-label">Nombre
+        <label class="form-label" data-i18n="reg.nombre">Nombre
             <input type="text" id="reg-nombre" class="form-input" placeholder="María"/>
         </label>
-        <label class="form-label">Apellido
+        <label class="form-label" data-i18n="reg.apellido">Apellido
             <input type="text" id="reg-apellido" class="form-input" placeholder="García"/>
         </label>
-        <label class="form-label">Correo electrónico
+        <label class="form-label" data-i18n="login.email">Correo electrónico
             <input type="email" id="reg-email" class="form-input" placeholder="tu@correo.com"/>
         </label>
-        <label class="form-label">Contraseña
+        <label class="form-label" data-i18n="login.password">Contraseña
             <input type="password" id="reg-pass" class="form-input" placeholder="Mínimo 6 caracteres"/>
         </label>
-        <label class="form-label">Teléfono (opcional)
+        <label class="form-label" data-i18n="reg.telefono">Teléfono (opcional)
             <input type="tel" id="reg-tel" class="form-input" placeholder="321 000 0000"/>
         </label>
-        <button class="btn-primary w100" onclick="hacerRegistro()">Crear cuenta</button>
-        <p class="auth-switch">¿Ya tienes cuenta?
-            <a href="#" onclick="mostrarTab('login')">Inicia sesión</a>
+        <button class="btn-primary w100" onclick="hacerRegistro()" data-i18n="reg.boton">Crear cuenta</button>
+        <p class="auth-switch" data-i18n="reg.conCuenta">¿Ya tienes cuenta?
+            <a href="#" onclick="mostrarTab('login')" data-i18n="reg.inicia">Inicia sesión</a>
         </p>
     </div>
 </div>
 
+<script src="js/i18n.js"></script>
 <script src="js/api.js"></script>
 <script src="js/auth.js"></script>
 <script>

@@ -13,29 +13,34 @@
     <div class="header-inner">
         <a href="index.html" class="logo">✦ Lau &amp; Up.</a>
         <nav class="nav">
-            <a href="index.html" class="nav-link">Inicio</a>
-            <a href="catalogo.html" class="nav-link active">Catálogo</a>
+            <a href="index.html" class="nav-link" data-i18n="nav.inicio">Inicio</a>
+            <a href="catalogo.html" class="nav-link active" data-i18n="nav.catalogo">Catálogo</a>
             <span id="nav-auth"></span>
         </nav>
         <div class="header-actions">
-            <button class="btn-icon" onclick="abrirCarrito()">
+            <div class="lang-selector">
+        		<button class="lang-btn active" data-lang="es" onclick="I18N.cambiar('es')">ES</button>
+       			<button class="lang-btn" data-lang="en" onclick="I18N.cambiar('en')">EN</button>
+       			<button class="lang-btn" data-lang="fr" onclick="I18N.cambiar('fr')">FR</button>
+    		</div>
+            <button class="btn-icon" onclick="abrirCarrito()" title="Carrito">
                 🛒 <span class="badge" id="badge-carrito">0</span>
             </button>
-            <button class="btn-icon" id="btn-user" onclick="irPerfil()">👤</button>
+            <button class="btn-icon" id="btn-user" onclick="irPerfil()" title="Perfil">👤</button>
         </div>
     </div>
 </header>
 
 <div class="catalogo-layout">
     <aside class="sidebar">
-        <h3 class="sidebar-title">Filtros</h3>
+        <h3 class="sidebar-title" data-i18n="filtro.titulo">Filtros</h3>
         <div class="filtro-grupo">
-            <label class="filtro-label">Buscar</label>
+            <label class="filtro-label" data-i18n="filtro.buscar">Buscar</label>
             <input type="text" id="input-buscar" class="input-search"
                    placeholder="Nombre del producto..." oninput="filtrar()"/>
         </div>
         <div class="filtro-grupo">
-            <label class="filtro-label">Categoría</label>
+            <label class="filtro-label" data-i18n="filtro.categoria">Categoría</label>
             <div id="filtro-categorias">
                 <label class="radio-label">
                     <input type="radio" name="cat" value="" checked onchange="filtrar()"/> Todas
@@ -43,7 +48,7 @@
             </div>
         </div>
         <div class="filtro-grupo">
-            <label class="filtro-label">Ordenar por</label>
+            <label class="filtro-label" data-i18n="filtro.ordenar">Ordenar por</label>
             <select id="select-orden" class="select-orden" onchange="filtrar()">
                 <option value="">Relevancia</option>
                 <option value="precio-asc">Precio: menor a mayor</option>
@@ -62,32 +67,33 @@
 <div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
 <aside class="carrito-panel" id="carrito-panel">
     <div class="carrito-header">
-        <h3>Tu carrito</h3>
+        <h3 data-i18n="carrito.titulo">Tu carrito</h3>
         <button onclick="cerrarCarrito()" class="btn-cerrar">✕</button>
     </div>
     <div class="carrito-items" id="carrito-items"></div>
     <div class="carrito-footer">
         <div class="carrito-total">
-            <span>Total</span>
+            <span data-i18n="carrito.total">Total</span>
             <strong id="carrito-total-val">$0</strong>
         </div>
-        <button class="btn-primary w100" onclick="checkout()">Proceder al pago</button>
+        <button class="btn-primary w100" onclick="checkout()" data-i18n="carrito.pagar">Proceder al pago</button>
     </div>
 </aside>
 
 <div class="modal-overlay" id="modal-checkout" style="display:none">
     <div class="modal">
-        <h3>Confirmar pedido</h3>
-        <label>Dirección de envío
+        <h3 data-i18n="checkout.titulo">Confirmar pedido</h3>
+        <label data-i18n="checkout.direccion">Dirección de envío
             <input type="text" id="input-direccion" placeholder="Calle 12 #34-56, Neiva"/>
         </label>
         <div class="modal-actions">
-            <button class="btn-outline" onclick="cerrarCheckout()">Cancelar</button>
-            <button class="btn-primary" onclick="confirmarPedido()">Confirmar</button>
+            <button class="btn-outline" onclick="cerrarCheckout()" data-i18n="checkout.cancelar">Cancelar</button>
+            <button class="btn-primary" onclick="confirmarPedido()" data-i18n="checkout.confirmar">Confirmar</button>
         </div>
     </div>
 </div>
 
+<script src="js/i18n.js"></script> 
 <script src="js/api.js"></script>
 <script src="js/carrito.js"></script>
 <script src="js/auth.js"></script>

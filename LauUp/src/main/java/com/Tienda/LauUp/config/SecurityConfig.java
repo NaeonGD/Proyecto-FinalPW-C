@@ -36,10 +36,12 @@ public class SecurityConfig {
                     "/", "/index.html", "/*.html",
                     "/css/**", "/js/**", "/img/**",
                     "/favicon.ico",
+                    "/error",
                     "/api/productos/**",
                     "/api/categorias/**",
                     "/api/usuarios/**",
-                    "/api/pedidos/**"
+                    "/api/pedidos/**",
+                    "/api/i18n/**"
                 ).permitAll()
                 .anyRequest().authenticated()
             )
