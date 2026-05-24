@@ -14,7 +14,7 @@ function agregarAlCarrito(producto) {
     }
     guardarCarrito();
     actualizarBadge();
-    mostrarToast('¡Agregado al carrito! 🛒');
+    mostrarToast(I18N.get('js.agregado'));
 }
 
 function quitarDelCarrito(id) {
@@ -60,11 +60,13 @@ function renderCarrito() {
     const items = Object.values(carrito);
     if (!items.length) {
         contenedor.innerHTML = `
-            <div class="carrito-vacio">
-                <span style="font-size:3rem">🛒</span>
-                <p>Tu carrito está vacío</p>
-                <a href="catalogo.html" class="btn-outline" onclick="cerrarCarrito()">Ver productos</a>
-            </div>`;
+		<div class="carrito-vacio">
+		            <span style="font-size:3rem">🛒</span>
+		            <p>${I18N.get('js.carritoVacio')}</p>
+		            <a href="catalogo.html" class="btn-outline" onclick="cerrarCarrito()">
+		                ${I18N.get('js.verProductos')}
+		            </a>
+		        </div>`;
         if (totalEl) totalEl.textContent = '$0';
         return;
     }
@@ -105,7 +107,7 @@ function checkout() {
         return;
     }
     if (!Object.keys(carrito).length) {
-        mostrarToast('El carrito está vacío.');
+        mostrarToast(I18N.get('js.carritoVacioMsg'));
         return;
     }
     document.getElementById('modal-checkout').style.display = 'flex';
@@ -118,7 +120,7 @@ function cerrarCheckout() {
 async function confirmarPedido() {
     const usuario   = authActual();
     const direccion = document.getElementById('input-direccion').value.trim();
-    if (!direccion) { mostrarToast('Ingresa una dirección de envío.'); return; }
+    if (!direccion) { mostrarToast(I18N.get('js.ingresaDireccion')); return; }
 
     const carritoSimple = {};
     Object.entries(carrito).forEach(([id, { cantidad }]) => {
@@ -138,10 +140,10 @@ async function confirmarPedido() {
         guardarCarrito();
         actualizarBadge();
         cerrarCheckout();
-        mostrarToast('¡Pedido realizado! 🎉');
+        mostrarToast('js.pedidoRealizado');
         setTimeout(() => window.location.href = 'perfil.html', 2000);
     } catch (e) {
-        mostrarToast('Error al procesar el pedido.');
+        mostrarToast(I18N.get('js.errorPedido'));
     }
 }
 

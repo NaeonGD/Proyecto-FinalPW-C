@@ -3,12 +3,12 @@
    ============================================================ */
 
 :root {
-    --rosa:     #e8567a;
+    --rosa:     #c94070;
     --rosa-cl:  #fce4ec;
-    --rosa-dk:  #c0395e;
+    --rosa-dk:  #a02d59;
     --gris-f:   #f8f5f3;
     --gris-m:   #e8e0dc;
-    --gris-t:   #8e7e78;
+    --gris-t:   #6b5e58;
     --negro:    #2a1e1e;
     --blanco:   #ffffff;
     --sombra:   0 4px 20px rgba(0,0,0,.08);
@@ -417,3 +417,21 @@ h1, h2, h3 { font-family: 'Playfair Display', serif; }
     background: var(--gris-m);
 }
 /* __ Hasta aca termina el OAUTH_____________________________________________*/
+
+
+/* __ Sniffer___________________________________________________________________________*/
+
+/* ── Accesibilidad ───────────────────────────────────────────── */
+.skip-link {
+    position: absolute;
+    top: -100px;
+    left: 0;
+    background: var(--rosa);
+    color: #fff;
+    padding: .5rem 1rem;
+    border-radius: 0 0 8px 0;
+    font-weight: 600;
+    z-index: 9999;
+    transition: top .3s;
+}
+.skip-link:focus { top: 0; }

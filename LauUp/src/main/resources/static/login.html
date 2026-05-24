@@ -8,7 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 </head>
 <body class="auth-body">
+<a href="#contenido-principal" class="skip-link">Saltar al contenido</a>
 
+<main role="main" id="contenido-principal">
 <div class="auth-container">
     <a href="index.html" class="logo" style="display:block;text-align:center;margin-bottom:2rem">
         ✦ Lau &amp; Up.
@@ -20,12 +22,12 @@
 	</div>
 
     <div class="auth-tabs">
-        <button class="auth-tab active" id="tab-login" onclick="mostrarTab('login')" data-i18n="nav.ingresar">Iniciar sesión</button>
-        <button class="auth-tab" id="tab-registro" onclick="mostrarTab('registro')" data-i18n="reg.boton">Registrarse</button>
+        <button class="auth-tab active" id="tab-login" role="tab" aria-selected="false" onclick="mostrarTab('login')" data-i18n="nav.ingresar">Iniciar sesión</button>
+        <button class="auth-tab" id="tab-registro" role="tab" aria-selected="false" onclick="mostrarTab('registro')" data-i18n="reg.boton">Registrarse</button>
     </div>
 
     <!-- LOGIN -->
-    <div id="form-login" class="auth-form">
+    <div id="form-login" class="auth-form" role="tabpanel" aria-labelledby="tab-login">
         <h2 class="auth-title" data-i18n="login.titulo">Bienvenida de vuelta ✨</h2>
         <div id="login-error" class="alert-error" style="display:none"></div>
         <label class="form-label"><span data-i18n="login.email">Correo electrónico</span>
@@ -41,7 +43,7 @@
         <div class="separador">
     		<span>o</span>
 		</div>
-			<a href="/oauth2/authorization/google" class="btn-google">
+			<a href="/oauth2/authorization/google" class="btn-google" aria-label="Iniciar sesión con Google">
     			<svg width="18" height="18" viewBox="0 0 48 48">
         			<path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
         			<path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
@@ -53,7 +55,7 @@
     </div>
 
     <!-- REGISTRO -->
-    <div id="form-registro" class="auth-form" style="display:none">
+    <div id="form-registro" class="auth-form" style="display:none" role="tabpanel" aria-labelledby="tab-registro">
         <h2 class="auth-title" data-i18n="reg.titulo">Crea tu cuenta 💄</h2>
         <div id="reg-error" class="alert-error"  style="display:none"></div>
         <div id="reg-ok"    class="alert-success" style="display:none"></div>
@@ -78,7 +80,7 @@
         </p>
     </div>
 </div>
-
+</main>
 <script src="js/i18n.js"></script>
 <script src="js/api.js"></script>
 <script src="js/auth.js"></script>
@@ -90,6 +92,9 @@
         document.getElementById('form-registro').style.display = tab === 'registro' ? 'block' : 'none';
         document.getElementById('tab-login').classList.toggle('active',    tab === 'login');
         document.getElementById('tab-registro').classList.toggle('active', tab === 'registro');
+     // ARIA
+        document.getElementById('tab-login').setAttribute('aria-selected',    tab === 'login');
+        document.getElementById('tab-registro').setAttribute('aria-selected', tab === 'registro');
     }
 
     async function hacerLogin() {

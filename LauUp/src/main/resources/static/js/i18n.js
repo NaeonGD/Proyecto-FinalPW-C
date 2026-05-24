@@ -7,7 +7,8 @@ const I18N = {
     async cargar(lang = null) {
         if (lang) this.idiomaActual = lang;
         localStorage.setItem('belleza_lang', this.idiomaActual);
-
+		document.documentElement.lang = this.idiomaActual;
+		
         try {
             const res = await fetch(`https://localhost:8443/api/i18n/${this.idiomaActual}`);
             this.mensajes = await res.json();

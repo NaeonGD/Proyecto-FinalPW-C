@@ -16,10 +16,21 @@ document.addEventListener('DOMContentLoaded', () => {
 // __ Navegación __________________________________________________
 
 function mostrarSeccion(sec) {
-    document.querySelectorAll('.admin-seccion').forEach(s => s.style.display = 'none');
-    document.querySelectorAll('.admin-link').forEach(l => l.classList.remove('active'));
-    document.getElementById('sec-' + sec).style.display = 'block';
-    event.target.classList.add('active');
+	document.querySelectorAll('.admin-seccion').forEach(s => {
+	        s.style.display = 'none';
+	        s.setAttribute('aria-hidden', 'true');
+	    });
+	    document.querySelectorAll('.admin-link').forEach(l => {
+	        l.classList.remove('active');
+	        l.removeAttribute('aria-current');
+	    });
+
+	    const seccion = document.getElementById('sec-' + sec);
+	    seccion.style.display = 'block';
+	    seccion.setAttribute('aria-hidden', 'false');
+
+	    event.target.classList.add('active');
+	    event.target.setAttribute('aria-current', 'page');
 
     if (sec === 'productos')  cargarProductos();
     if (sec === 'pedidos')    cargarPedidos();
@@ -86,39 +97,39 @@ async function cargarSelectCategorias(seleccionadaId = null) {
 }
 
 async function guardarProducto() {
-    const id          = document.getElementById('prod-id').value;
-    const categoriaId = document.getElementById('prod-categoria').value;
-    const datos = {
-        nombre:      document.getElementById('prod-nombre').value.trim(),
-        precio:      parseFloat(document.getElementById('prod-precio').value),
-        stock:       parseInt(document.getElementById('prod-stock').value),
-        descripcion: document.getElementById('prod-descripcion').value.trim(),
-        imagenUrl:   document.getElementById('prod-imagen').value.trim(),
-        activo:      true,
-        categoria:   { id: parseInt(categoriaId) }
-    };
+	const id          = document.getElementById('prod-id').value;
+	    const categoriaId = document.getElementById('prod-categoria').value;
+	    const datos = {
+	        nombre:      document.getElementById('prod-nombre').value.trim(),
+	        precio:      parseFloat(document.getElementById('prod-precio').value),
+	        stock:       parseInt(document.getElementById('prod-stock').value),
+	        descripcion: document.getElementById('prod-descripcion').value.trim(),
+	        imagenUrl:   document.getElementById('prod-imagen').value.trim(),
+	        activo:      true,
+	        categoria:   { id: parseInt(categoriaId) }
+	    };
 
-    if (!datos.nombre || !datos.precio) {
-        alert('Nombre y precio son obligatorios.');
-        return;
-    }
+	    if (!datos.nombre || !datos.precio) {
+	        alert(I18N.get('js.confirmarEliminar'));
+	        return;
+	    }
 
-    if (id) {
-        await API.put('/api/productos/' + id, datos);
-    } else {
-        await API.post('/api/productos', datos);
-    }
+	    if (id) {
+	        await API.put('/api/productos/' + id, datos);
+	    } else {
+	        await API.post('/api/productos', datos);
+	    }
 
-    cerrarModalProducto();
-    cargarProductos();
-    mostrarToastAdmin('Producto guardado correctamente ✅');
+	    cerrarModalProducto();
+	    cargarProductos();
+	    mostrarToastAdmin(I18N.get('js.productoGuardado') + ' ✅');
 }
 
 async function eliminarProducto(id) {
-    if (!confirm('¿Eliminar este producto?')) return;
-    await API.delete('/api/productos/' + id);
-    cargarProductos();
-    mostrarToastAdmin('Producto eliminado ✅');
+	if (!confirm(I18N.get('js.confirmarEliminar'))) return;
+	    await API.delete('/api/productos/' + id);
+	    cargarProductos();
+	    mostrarToastAdmin(I18N.get('js.productoEliminado') + ' ✅');
 }
 
 // __ PEDIDOS __________________________________________________
@@ -147,21 +158,20 @@ async function cargarPedidos() {
 }
 
 async function cambiarEstadoPedido(id, estado) {
-    try {
-        const res = await fetch(`http://localhost:8080/api/pedidos/${id}/estado?estado=${estado}`, {
-            method: 'PATCH'
-        });
-        const data = await res.json();
-        if (data.error) {
-            mostrarToastAdmin('Error: ' + data.error);
-            return;
-        }
-        mostrarToastAdmin('Estado actualizado ✅');
-        // Recargar después de 1 segundo para que se vea el toast
-        setTimeout(() => cargarPedidos(), 1000);
-    } catch (e) {
-        mostrarToastAdmin('Error al actualizar estado.');
-    }
+	try {
+	   const res = await fetch(`https://localhost:8443/api/pedidos/${id}/estado?estado=${estado}`, {
+	   method: 'PATCH'
+	   });
+	   const data = await res.json();
+	   if (data.error) {
+	       mostrarToastAdmin('Error: ' + data.error);
+	   return;
+	   }
+	       mostrarToastAdmin(I18N.get('js.estadoActualizado') + ' ✅');
+	       setTimeout(() => cargarPedidos(), 1000);
+	   } catch (e) {
+	       mostrarToastAdmin(I18N.get('js.errorConexion'));
+	   }
 }
 
 // __ CATEGORIAS __________________________________________________
@@ -190,13 +200,16 @@ function cerrarModalCategoria() {
 }
 
 async function guardarCategoria() {
-    const nombre      = document.getElementById('cat-nombre').value.trim();
-    const descripcion = document.getElementById('cat-descripcion').value.trim();
-    if (!nombre) { alert('El nombre es obligatorio.'); return; }
-    await API.post('/api/categorias', { nombre, descripcion });
-    cerrarModalCategoria();
-    cargarCategorias();
-    mostrarToastAdmin('Categoría creada ✅');
+	const nombre      = document.getElementById('cat-nombre').value.trim();
+	    const descripcion = document.getElementById('cat-descripcion').value.trim();
+	    if (!nombre) { 
+	        alert(I18N.get('js.confirmarEliminar')); 
+	        return; 
+	    }
+	    await API.post('/api/categorias', { nombre, descripcion });
+	    cerrarModalCategoria();
+	    cargarCategorias();
+	    mostrarToastAdmin(I18N.get('js.categoriaCreada') + ' ✅');
 }
 
 // __ Utilidades __________________________________________________

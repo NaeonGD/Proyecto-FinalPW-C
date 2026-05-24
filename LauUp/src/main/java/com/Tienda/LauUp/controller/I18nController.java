@@ -52,7 +52,16 @@ public class I18nController {
 	            "admin.nombre", "admin.categoria", "admin.precio", "admin.stock",
 	            "admin.acciones", "admin.usuario", "admin.total", "admin.estado",
 	            "admin.fecha", "admin.cambiarEstado", "admin.descripcion",
-	            "admin.imagen", "admin.verTienda"
+	            "admin.imagen", "admin.verTienda","filtro.titulo", "filtro.buscar", 
+	            "filtro.categoria", "filtro.ordenar",
+	         // JS mensajes
+	            "js.carritoVacio", "js.verProductos", "js.agregado",
+	            "js.carritoVacioMsg", "js.ingresaDireccion", "js.pedidoRealizado",
+	            "js.errorPedido", "js.errorCategorias", "js.errorProductos",
+	            "js.sinResultados", "js.cargando", "js.productoGuardado",
+	            "js.productoEliminado", "js.estadoActualizado", "js.categoriaCreada",
+	            "js.confirmarEliminar", "js.confirmarCancelar", "js.errorConexion",
+	            "js.aun.no.pedidos"
 	        };
 		
 		Map<String, String> mensajes = new HashMap<>();

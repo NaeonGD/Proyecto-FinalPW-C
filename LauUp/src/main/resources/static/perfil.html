@@ -8,8 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 </head>
 <body>
+<a href="#contenido-principal" class="skip-link">Saltar al contenido</a>
 
-<header class="header">
+<header class="header" role="banner">
     <div class="header-inner">
         <a href="index.html" class="logo">✦ Lau &amp; Up.</a>
         <nav class="nav">
@@ -22,26 +23,27 @@
        			<button class="lang-btn" data-lang="en" onclick="I18N.cambiar('en')">EN</button>
        			<button class="lang-btn" data-lang="fr" onclick="I18N.cambiar('fr')">FR</button>
     		</div>
-            <button class="btn-icon" onclick="window.location='catalogo.html'">🛒</button>
+            <button class="btn-icon" onclick="window.location='catalogo.html'" aria-label="Ir al catálogo">🛒</button>
         </div>
     </div>
 </header>
 
+<main role="main" id="contenido-principal">
 <div class="perfil-layout">
-    <aside class="perfil-sidebar">
-        <div class="perfil-avatar">👤</div>
+    <aside class="perfil-sidebar" role="complementary" aria-label="Menú de perfil">
+        <div class="perfil-avatar" aria-hidden="true">👤</div>
         <h3 id="perfil-nombre">Cargando...</h3>
         <p id="perfil-email" class="text-muted"></p>
-        <nav class="perfil-nav">
-            <a href="#" class="perfil-link active" onclick="mostrarSeccion('datos')" data-i18n="perfil.titulo">Mi perfil</a>
-            <a href="#" class="perfil-link" onclick="mostrarSeccion('pedidos')" data-i18n="perfil.pedidos">Mis pedidos</a>
-            <a href="#" class="perfil-link peligro" onclick="cerrarSesion()" data-i18n="perfil.cerrar">Cerrar sesión</a>
+        <nav class="perfil-nav" aria-label="Navegación del perfil">
+            <a href="#" class="perfil-link active" aria-current="page" onclick="mostrarSeccion('datos')" data-i18n="perfil.titulo">Mi perfil</a>
+            <a href="#" class="perfil-link" aria-current="page" onclick="mostrarSeccion('pedidos')" data-i18n="perfil.pedidos">Mis pedidos</a>
+            <a href="#" class="perfil-link peligro" aria-current="page" onclick="cerrarSesion()" data-i18n="perfil.cerrar">Cerrar sesión</a>
         </nav>
     </aside>
 
-    <main class="perfil-main">
+    <div class="perfil-main">
         <!-- Datos personales -->
-        <section id="sec-datos" class="perfil-seccion">
+        <section id="sec-datos" class="perfil-seccion" aria-labelledby="titulo-datos">
             <h2 class="section-title" style="text-align:left" data-i18n="perfil.titulo">Mis datos</h2>
             <div id="datos-ok" class="alert-success" style="display:none">
                 Datos guardados correctamente.
@@ -67,14 +69,22 @@
         </section>
 
         <!-- Pedidos -->
-        <section id="sec-pedidos" class="perfil-seccion" style="display:none">
+        <section id="sec-pedidos" class="perfil-seccion" style="display:none" aria-labelledby="titulo-pedidos">
             <h2 class="section-title" style="text-align:left" data-i18n="perfil.pedidos">Mis pedidos</h2>
             <div id="lista-pedidos">
                 <p class="text-muted">Cargando pedidos...</p>
             </div>
         </section>
-    </main>
+    </div>
 </div>
+</main>
+
+<footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+        <span class="logo">✦ Lau &amp; Up.</span>
+        <p data-i18n="footer.texto">© 2026 · Proyecto Programación Web · USCO</p>
+    </div>
+</footer>
 
 <script src="js/i18n.js"></script>
 <script src="js/api.js"></script>
@@ -92,9 +102,23 @@
     document.getElementById('p-dir').value      = usuario.direccion || '';
 
     function mostrarSeccion(sec) {
-        document.querySelectorAll('.perfil-seccion').forEach(s => s.style.display = 'none');
-        document.querySelectorAll('.perfil-link').forEach(l => l.classList.remove('active'));
-        document.getElementById('sec-' + sec).style.display = 'block';
+    	document.querySelectorAll('.perfil-seccion').forEach(s => {
+            s.style.display = 'none';
+            s.setAttribute('aria-hidden', 'true');
+        });
+        document.querySelectorAll('.perfil-link').forEach(l => {
+            l.classList.remove('active');
+            l.removeAttribute('aria-current');
+        });
+        const seccion = document.getElementById('sec-' + sec);
+        seccion.style.display = 'block';
+        seccion.setAttribute('aria-hidden', 'false');
+        
+        const link = document.querySelector(`.perfil-link[onclick="mostrarSeccion('${sec}')"]`);
+        if (link) { 
+            link.classList.add('active');
+            link.setAttribute('aria-current', 'page');
+        }
         if (sec === 'pedidos') cargarPedidos();
     }
 
@@ -156,7 +180,7 @@
     }
 
     async function cancelarPedido(id) {
-        if (!confirm('¿Estás segura que quieres cancelar este pedido?')) return;
+        if (!confirm(I18N.get('js.confirmarCancelar'))) return;
         try {
             const res = await fetch('http://localhost:8080/api/pedidos/' + id + '/cancelar', {
                 method: 'PATCH'

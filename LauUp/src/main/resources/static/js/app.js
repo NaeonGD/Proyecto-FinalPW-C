@@ -18,14 +18,14 @@ async function cargarCategorias() {
     try {
         const cats = await API.getCategorias();
         grid.innerHTML = cats.map(c => `
-            <a href="catalogo.html?cat=${c.id}" class="cat-card">
-                <span class="cat-icon">${ICONOS_CAT[c.nombre] || '🌟'}</span>
-                <h3 class="cat-nombre">${c.nombre}</h3>
-                <p class="cat-desc">${c.descripcion || ''}</p>
-            </a>
+			<a href="catalogo.html?cat=${c.id}" class="cat-card">
+			   <span class="cat-icon">${ICONOS_CAT[c.nombre] || '🌟'}</span>
+			   <h3 class="cat-nombre">${c.nombre}</h3>
+			   <p class="cat-desc">${c.descripcion || ''}</p>
+			</a>
         `).join('');
     } catch {
-        grid.innerHTML = '<p class="text-muted">No se pudieron cargar las categorías.</p>';
+        grid.innerHTML = `<p class="text-muted">${I18N.get('js.errorCategorias')}</p>`;
     }
 }
 
@@ -36,7 +36,7 @@ async function cargarProductosDestacados() {
         const destacados = productos.slice(0, 8);
         grid.innerHTML = destacados.map(renderProductoCard).join('');
     } catch {
-        grid.innerHTML = '<p class="text-muted">No se pudieron cargar los productos.</p>';
+        grid.innerHTML = `<p class="text-muted">${I18N.get('js.errorProductos')}</p>`;
     }
 }
 
@@ -57,11 +57,11 @@ function renderProductoCard(p) {
                 <p class="producto-desc">${p.descripcion || ''}</p>
                 <div class="producto-footer">
                     <strong class="producto-precio">${precio}</strong>
-                    <button class="btn-add ${p.stock <= 0 ? 'disabled' : ''}"
-                            onclick="agregarAlCarrito(${JSON.stringify(p).replace(/"/g, '&quot;')})"
-                            ${p.stock <= 0 ? 'disabled' : ''}>
-                        + Agregar
-                    </button>
+					<button class="btn-add ${p.stock <= 0 ? 'disabled' : ''}"
+					        onclick="agregarAlCarrito(${JSON.stringify(p).replace(/"/g, '&quot;')})"
+					        ${p.stock <= 0 ? 'disabled' : ''}>
+					    ${p.stock <= 0 ? I18N.get('prod.agotado') : I18N.get('prod.agregar')}
+					</button>
                 </div>
             </div>
         </div>

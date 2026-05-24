@@ -44,7 +44,7 @@ async function cargarTodosProductos() {
         renderProductos(todosLosProductos);
     } catch {
         document.getElementById('productos-catalogo').innerHTML =
-            '<p class="text-muted">Error al cargar productos.</p>';
+            `<p class="text-muted">${I18N.get('js.errorProductos')}</p>`;
     }
 }
 
@@ -75,7 +75,7 @@ function renderProductos(lista) {
         grid.innerHTML = `
             <div style="grid-column:1/-1;text-align:center;padding:4rem 0">
                 <p style="font-size:3rem">🔍</p>
-                <p class="text-muted">No encontramos productos con esos filtros.</p>
+                <p class="text-muted">${I18N.get('js.sinResultados')}</p>
             </div>`;
         return;
     }
@@ -92,19 +92,19 @@ function renderProductos(lista) {
                         ? `<img src="${p.imagenUrl}" alt="${p.nombre}" loading="lazy"/>`
                         : `<div class="producto-img-placeholder">${ICONOS_CAT[p.categoria?.nombre] || '🌟'}</div>`
                     }
-                    ${p.stock <= 0 ? '<span class="badge-agotado">Agotado</span>' : ''}
+                    ${p.stock <= 0 ? `<span class="badge-agotado">${I18N.get('prod.agotado')}</span>` : ''}
                 </div>
                 <div class="producto-body">
                     <span class="producto-cat">${p.categoria?.nombre || ''}</span>
-                    <h4 class="producto-nombre">${p.nombre}</h4>
-                    <p class="producto-desc">${p.descripcion || ''}</p>
-                    <div class="producto-footer">
-                        <strong class="producto-precio">${precio}</strong>
-                        <button class="btn-add ${p.stock <= 0 ? 'disabled' : ''}"
-                                onclick="agregarAlCarrito(${JSON.stringify(p).replace(/"/g, '&quot;')})"
-                                ${p.stock <= 0 ? 'disabled' : ''}>
-                            + Agregar
-                        </button>
+				    <h4 class="producto-nombre">${p.nombre}</h4>
+				    <p class="producto-desc">${p.descripcion || ''}</p>
+				    <div class="producto-footer">
+				        <strong class="producto-precio">${precio}</strong>
+						<button class="btn-add ${p.stock <= 0 ? 'disabled' : ''}"
+						    onclick="agregarAlCarrito(${JSON.stringify(p).replace(/"/g, '&quot;')})"
+						    ${p.stock <= 0 ? 'disabled' : ''}>
+						    ${p.stock <= 0 ? I18N.get('prod.agotado') : I18N.get('prod.agregar')}
+						</button>
                     </div>
                 </div>
             </div>

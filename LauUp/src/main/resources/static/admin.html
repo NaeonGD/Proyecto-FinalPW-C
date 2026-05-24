@@ -8,8 +8,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 </head>
 <body>
+<a href="#contenido-principal" class="skip-link">Saltar al contenido</a>
 
-<header class="header">
+<header class="header" role="banner">
     <div class="header-inner">
         <a href="index.html" class="logo">✦ Lau &amp; Up. <span class="admin-tag">ADMIN</span></a>
         <nav class="nav">
@@ -26,27 +27,28 @@
     </div>
 </header>
 
+<main role="main" id="contenido-principal">
 <div class="admin-layout">
 
     <!-- Sidebar -->
-    <aside class="admin-sidebar">
-        <nav class="admin-nav">
-            <a href="#" class="admin-link active" onclick="mostrarSeccion('productos')" data-i18n="admin.productos">📦 Productos</a>
-            <a href="#" class="admin-link" onclick="mostrarSeccion('pedidos')" data-i18n="admin.pedidos">📋 Pedidos</a>
-            <a href="#" class="admin-link" onclick="mostrarSeccion('categorias')" data-i18n="admin.categorias">🏷️ Categorías</a>
+    <aside class="admin-sidebar" role="complementary" aria-label="Menú de administración">
+        <nav class="admin-nav" aria-label="Navegación del administrador">
+            <a href="#" class="admin-link active" aria-current="page" onclick="mostrarSeccion('productos')" data-i18n="admin.productos">📦 Productos</a>
+            <a href="#" class="admin-link" aria-current="page" onclick="mostrarSeccion('pedidos')" data-i18n="admin.pedidos">📋 Pedidos</a>
+            <a href="#" class="admin-link" aria-current="page" onclick="mostrarSeccion('categorias')" data-i18n="admin.categorias">🏷️ Categorías</a>
         </nav>
     </aside>
 
     <main class="admin-main">
 
         <!-- ── PRODUCTOS ── -->
-        <section id="sec-productos" class="admin-seccion">
+        <section id="sec-productos" class="admin-seccion" aria-labelledby="titulo-productos">
             <div class="admin-sec-header">
-                <h2 ><span data-i18n="admin.gestionProductos">Gestión de Productos</span></h2>
+                <h2 id="titulo-productos"><span data-i18n="admin.gestionProductos">Gestión de Productos</span></h2>
                 <button class="btn-primary" onclick="abrirModalProducto()"><span data-i18n="admin.nuevoProducto">+ Nuevo producto</span></button>
             </div>
             <div class="tabla-wrap">
-                <table class="admin-tabla">
+                <table class="admin-tabla" role="table" aria-label="Lista de productos">
                     <thead>
                         <tr>
                         	<th>ID</th>
@@ -63,12 +65,12 @@
         </section>
 
         <!-- ── PEDIDOS ── -->
-        <section id="sec-pedidos" class="admin-seccion" style="display:none">
+        <section id="sec-pedidos" class="admin-seccion" style="display:none" aria-labelledby="titulo-pedidos">
             <div class="admin-sec-header">
-                <h2 ><span data-i18n="admin.gestionPedidos">Gestión de Pedidos</span></h2>
+                <h2 id="titulo-pedidos"><span data-i18n="admin.gestionPedidos">Gestión de Pedidos</span></h2>
             </div>
             <div class="tabla-wrap">
-                <table class="admin-tabla">
+                <table class="admin-tabla" role="table" aria-label="Lista de pedidos">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -85,13 +87,13 @@
         </section>
 
         <!-- ── CATEGORIAS ── -->
-        <section id="sec-categorias" class="admin-seccion" style="display:none">
+        <section id="sec-categorias" class="admin-seccion" style="display:none" aria-labelledby="titulo-categorias">
             <div class="admin-sec-header">
-                <h2 ><span data-i18n="admin.gestionCategorias">Gestión de Categorías</span></h2>
+                <h2 id="titulo-categorias"><span data-i18n="admin.gestionCategorias">Gestión de Categorías</span></h2>
                 <button class="btn-primary" onclick="abrirModalCategoria()"><span data-i18n="admin.nuevaCategoria">+ Nueva categoría</span></button>
             </div>
             <div class="tabla-wrap">
-                <table class="admin-tabla">
+                <table class="admin-tabla" role="table" aria-label="Lista de categorías">
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -108,7 +110,7 @@
 </div>
 
 <!-- Modal producto -->
-<div class="modal-overlay" id="modal-producto" style="display:none">
+<div class="modal-overlay" id="modal-producto" style="display:none" role="dialog" aria-modal="true" aria-labelledby="modal-titulo">
     <div class="modal modal-grande">
         <h3 id="modal-titulo">Nuevo producto</h3>
         <input type="hidden" id="prod-id"/>
@@ -142,9 +144,9 @@
 </div>
 
 <!-- Modal categoría -->
-<div class="modal-overlay" id="modal-categoria" style="display:none">
+<div class="modal-overlay" id="modal-categoria" style="display:none" role="dialog" aria-modal="true" aria-labelledby="titulo-modal-cat">
     <div class="modal">
-        <h3>Nueva categoría</h3>
+        <h3 id="titulo-modal-cat">Nueva categoría</h3>
         <label class="form-label"><span data-i18n="admin.nombre">Nombre</span>
             <input type="text" id="cat-nombre" class="form-input"/>
         </label>
@@ -157,6 +159,7 @@
         </div>
     </div>
 </div>
+</main>
 
 <script src="js/i18n.js"></script>
 <script src="js/api.js"></script>

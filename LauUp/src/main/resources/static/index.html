@@ -8,13 +8,13 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 </head>
 <body>
-
-<header class="header">
+<a href="#contenido-principal" class="skip-link">Saltar al contenido</a>
+<header class="header" role="banner">
     <div class="header-inner">
         <a href="index.html" class="logo">✦ Lau &amp; Up.</a>
         <nav class="nav">
-            <a href="index.html" class="nav-link active" data-i18n="nav.inicio">Inicio</a>
-            <a href="catalogo.html" class="nav-link" data-i18n="nav.catalogo">Catálogo</a>
+            <a href="index.html" class="nav-link active"><span data-i18n="nav.inicio">Inicio</span></a>
+            <a href="catalogo.html" class="nav-link"><span data-i18n="nav.catalogo">Catálogo</span></a>
             <span id="nav-auth"></span>
         </nav>
         <div class="header-actions">
@@ -28,10 +28,10 @@
             </button>
             <button class="btn-icon" id="btn-user" onclick="irPerfil()" title="Perfil">👤</button>
         </div>
-    </div>
+    </div>    
 </header>
-
-<section class="hero">
+<main role="main" id="contenido-principal">
+<section class="hero" id="contenido-principal">
     <div class="hero-content">
         <span class="hero-tag" data-i18n="hero.tag">Nueva colección</span>
         <h1 class="hero-title" data-i18n="hero.titulo">Tu belleza,<br/><em>tu historia.</em></h1>
@@ -62,8 +62,8 @@
         <a href="catalogo.html" class="btn-outline" data-i18n="sec.verTodos">Ver todos los productos</a>
     </div>
 </section>
-
-<footer class="footer">
+</main>
+<footer class="footer" role="contentinfo">
     <div class="footer-inner">
         <span class="logo">✦ Lau &amp; Up.</span>
         <p data-i18n="footer.texto">© 2026 · Proyecto Programación Web · USCO</p>

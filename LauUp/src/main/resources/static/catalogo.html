@@ -9,12 +9,12 @@
 </head>
 <body>
 
-<header class="header">
+<header class="header" role="banner">
     <div class="header-inner">
         <a href="index.html" class="logo">✦ Lau &amp; Up.</a>
         <nav class="nav">
-            <a href="index.html" class="nav-link" data-i18n="nav.inicio">Inicio</a>
-            <a href="catalogo.html" class="nav-link active" data-i18n="nav.catalogo">Catálogo</a>
+            <a href="index.html" class="nav-link"><span data-i18n="nav.inicio">Inicio</span></a>
+            <a href="catalogo.html" class="nav-link active"><span data-i18n="nav.catalogo">Catálogo</span></a>
             <span id="nav-auth"></span>
         </nav>
         <div class="header-actions">
@@ -31,16 +31,17 @@
     </div>
 </header>
 
+<main role="main" id="contenido-principal">
 <div class="catalogo-layout">
     <aside class="sidebar">
-        <h3 class="sidebar-title" data-i18n="filtro.titulo">Filtros</h3>
+        <h3 class="sidebar-title"><span data-i18n="filtro.titulo">Filtros</span></h3>
         <div class="filtro-grupo">
-            <label class="filtro-label" data-i18n="filtro.buscar">Buscar</label>
+            <label class="filtro-label"><span data-i18n="filtro.buscar">Buscar</span></label>
             <input type="text" id="input-buscar" class="input-search"
                    placeholder="Nombre del producto..." oninput="filtrar()"/>
         </div>
         <div class="filtro-grupo">
-            <label class="filtro-label" data-i18n="filtro.categoria">Categoría</label>
+            <label class="filtro-label"><span data-i18n="filtro.categoria">Categoría</span></label>
             <div id="filtro-categorias">
                 <label class="radio-label">
                     <input type="radio" name="cat" value="" checked onchange="filtrar()"/> Todas
@@ -48,7 +49,7 @@
             </div>
         </div>
         <div class="filtro-grupo">
-            <label class="filtro-label" data-i18n="filtro.ordenar">Ordenar por</label>
+            <label class="filtro-label"><span data-i18n="filtro.ordenar">Ordenar por</span></label>
             <select id="select-orden" class="select-orden" onchange="filtrar()">
                 <option value="">Relevancia</option>
                 <option value="precio-asc">Precio: menor a mayor</option>
@@ -58,16 +59,24 @@
         </div>
     </aside>
 
-    <main class="catalogo-main">
+    <div class="catalogo-main">
         <p id="resultado-count" class="resultado-count">Cargando productos...</p>
         <div class="productos-grid" id="productos-catalogo"></div>
-    </main>
+    </div>
 </div>
+</main>
+
+<footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+        <span class="logo">✦ Lau &amp; Up.</span>
+        <p data-i18n="footer.texto">© 2026 · Proyecto Programación Web · USCO</p>
+    </div>
+</footer>
 
 <div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
 <aside class="carrito-panel" id="carrito-panel">
     <div class="carrito-header">
-        <h3 data-i18n="carrito.titulo">Tu carrito</h3>
+        <h3><span data-i18n="carrito.titulo">Tu carrito</span></h3>
         <button onclick="cerrarCarrito()" class="btn-cerrar">✕</button>
     </div>
     <div class="carrito-items" id="carrito-items"></div>
@@ -76,19 +85,19 @@
             <span data-i18n="carrito.total">Total</span>
             <strong id="carrito-total-val">$0</strong>
         </div>
-        <button class="btn-primary w100" onclick="checkout()" data-i18n="carrito.pagar">Proceder al pago</button>
+        <button class="btn-primary w100" onclick="checkout()"><span data-i18n="carrito.pagar">Proceder al pago</span></button>
     </div>
 </aside>
 
 <div class="modal-overlay" id="modal-checkout" style="display:none">
     <div class="modal">
-        <h3 data-i18n="checkout.titulo">Confirmar pedido</h3>
-        <label data-i18n="checkout.direccion">Dirección de envío
+        <h3 ><span data-i18n="checkout.titulo">Confirmar pedido</span></h3>
+        <label ><span data-i18n="checkout.direccion">Dirección de envío</span>
             <input type="text" id="input-direccion" placeholder="Calle 12 #34-56, Neiva"/>
         </label>
         <div class="modal-actions">
-            <button class="btn-outline" onclick="cerrarCheckout()" data-i18n="checkout.cancelar">Cancelar</button>
-            <button class="btn-primary" onclick="confirmarPedido()" data-i18n="checkout.confirmar">Confirmar</button>
+            <button class="btn-outline" onclick="cerrarCheckout()"><span data-i18n="checkout.cancelar">Cancelar</span></button>
+            <button class="btn-primary" onclick="confirmarPedido()"><span data-i18n="checkout.confirmar">Confirmar</span></button>
         </div>
     </div>
 </div>
