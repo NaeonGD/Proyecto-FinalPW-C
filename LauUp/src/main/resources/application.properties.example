@@ -1,0 +1,35 @@
+# ============================================================
+# CONFIGURACION - Copia este archivo como application.properties
+# y rellena los valores
+# ============================================================
+
+# Servidor
+server.port=8443
+
+# Base de datos MySQL
+spring.datasource.url=jdbc:mysql://localhost:3306/lauup_db?useSSL=false&serverTimezone=America/Bogota&allowPublicKeyRetrieval=true
+spring.datasource.username=root
+spring.datasource.password=TU_PASSWORD_AQUI
+
+# JPA
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQLDialect
+
+# JWT
+jwt.secret=lauup2026universidadsurcolombiana
+jwt.expiration=86400000
+
+# OAuth2 Google
+spring.security.oauth2.client.registration.google.client-id=TU_CLIENT_ID_AQUI
+spring.security.oauth2.client.registration.google.client-secret=TU_CLIENT_SECRET_AQUI
+spring.security.oauth2.client.registration.google.scope=email,profile
+spring.security.oauth2.client.registration.google.redirect-uri=https://localhost:8443/login/oauth2/code/google
+
+# SSL
+server.ssl.enabled=true
+server.ssl.key-store=classpath:lauup.jks
+server.ssl.key-store-password=lauup123
+server.ssl.key-alias=lauup
+server.ssl.key-password=lauup123
+server.ssl.key-store-type=JKS
