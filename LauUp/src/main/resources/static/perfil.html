@@ -72,7 +72,7 @@
         <section id="sec-pedidos" class="perfil-seccion" style="display:none" aria-labelledby="titulo-pedidos">
             <h2 class="section-title" style="text-align:left" data-i18n="perfil.pedidos">Mis pedidos</h2>
             <div id="lista-pedidos">
-                <p class="text-muted">Cargando pedidos...</p>
+                <p class="text-muted" >Cargando pedidos...</p>
             </div>
         </section>
     </div>
@@ -141,7 +141,7 @@
         const contenedor = document.getElementById('lista-pedidos');
         const pedidos = await API.get('/api/pedidos/usuario/' + usuario.id);
         if (!pedidos.length) {
-            contenedor.innerHTML = '<p class="text-muted">Aún no tienes pedidos.</p>';
+        	contenedor.innerHTML = `<p class="text-muted">${I18N.get('js.aun.no.pedidos')}</p>`;
             return;
         }
         contenedor.innerHTML = pedidos.map(p => {

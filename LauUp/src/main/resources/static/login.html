@@ -71,6 +71,9 @@
         <label class="form-label"><span data-i18n="login.password">Contraseña</span>
             <input type="password" id="reg-pass" class="form-input" placeholder="Mínimo 6 caracteres"/>
         </label>
+        <label class="form-label"><span data-i18n="reg.confirmarPass">Confirmar contraseña</span>
+    	<input type="password" id="reg-pass2" class="form-input" placeholder="Repite tu contraseña"/>
+		</label>
         <label class="form-label"><span data-i18n="reg.telefono">Teléfono (opcional)</span>
             <input type="tel" id="reg-tel" class="form-input" placeholder="321 000 0000"/>
         </label>
@@ -104,7 +107,7 @@
         err.style.display = 'none';
 
         if (!email || !pass) {
-            err.textContent = 'Completa todos los campos.';
+        	err.textContent = I18N.get('reg.todosCampos');
             err.style.display = 'block';
             return;
         }
@@ -118,7 +121,7 @@
             guardarAuth(data);  // ← ahora guarda { token, usuario }
             window.location.href = 'index.html';
         } catch (e) {
-            err.textContent = 'Error al conectar con el servidor.';
+        	err.textContent = I18N.get('js.errorConexion');
             err.style.display = 'block';
         }
     }
@@ -128,19 +131,25 @@
         const apellido = document.getElementById('reg-apellido').value.trim();
         const email    = document.getElementById('reg-email').value.trim();
         const pass     = document.getElementById('reg-pass').value;
+        const pass2    = document.getElementById('reg-pass2').value;
         const tel      = document.getElementById('reg-tel').value.trim();
         const err      = document.getElementById('reg-error');
         const ok       = document.getElementById('reg-ok');
         err.style.display = 'none';
         ok.style.display  = 'none';
 
-        if (!nombre || !apellido || !email || !pass) {
-            err.textContent = 'Completa los campos obligatorios.';
+        if (!nombre || !apellido || !email || !pass || !pass2) {
+            err.textContent = I18N.get('reg.camposObligatorios');
             err.style.display = 'block';
             return;
         }
         if (pass.length < 6) {
-            err.textContent = 'La contraseña debe tener al menos 6 caracteres.';
+            err.textContent = I18N.get('reg.passCorta');
+            err.style.display = 'block';
+            return;
+        }
+        if (pass !== pass2) {
+            err.textContent = I18N.get('reg.passNoCoincide');
             err.style.display = 'block';
             return;
         }
@@ -151,11 +160,11 @@
                 err.style.display = 'block';
                 return;
             }
-            ok.textContent = '¡Cuenta creada! Ahora puedes iniciar sesión.';
+            ok.textContent = I18N.get('reg.cuentaCreada');
             ok.style.display = 'block';
             setTimeout(() => mostrarTab('login'), 1500);
         } catch (e) {
-            err.textContent = 'Error al conectar con el servidor.';
+            err.textContent = I18N.get('js.errorConexion');
             err.style.display = 'block';
         }
     }

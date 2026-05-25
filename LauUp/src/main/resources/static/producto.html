@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Producto | Lau & Up.</title>
+    <link rel="stylesheet" href="css/styles.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+<a href="#contenido-principal" class="skip-link">Saltar al contenido</a>
+
+<header class="header" role="banner">
+    <div class="header-inner">
+        <a href="index.html" class="logo">✦ Lau &amp; Up.</a>
+        <nav class="nav">
+            <a href="index.html" class="nav-link" data-i18n="nav.inicio">Inicio</a>
+            <a href="catalogo.html" class="nav-link" data-i18n="nav.catalogo">Catálogo</a>
+            <span id="nav-auth"></span>
+        </nav>
+        <div class="header-actions">
+            <div class="lang-selector">
+                <button class="lang-btn active" data-lang="es" onclick="I18N.cambiar('es')">ES</button>
+                <button class="lang-btn" data-lang="en" onclick="I18N.cambiar('en')">EN</button>
+                <button class="lang-btn" data-lang="fr" onclick="I18N.cambiar('fr')">FR</button>
+            </div>
+            <button class="btn-icon" onclick="abrirCarrito()" aria-label="Abrir carrito">
+                🛒 <span class="badge" id="badge-carrito">0</span>
+            </button>
+            <button class="btn-icon" id="btn-user" onclick="irPerfil()" aria-label="Ver perfil">👤</button>
+        </div>
+    </div>
+</header>
+
+<main role="main" id="contenido-principal">
+
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <a href="index.html" data-i18n="nav.inicio">Inicio</a>
+        <span>›</span>
+        <a href="catalogo.html" data-i18n="nav.catalogo">Catálogo</a>
+        <span>›</span>
+        <span id="bread-nombre">...</span>
+    </div>
+
+    <!-- Detalle producto -->
+    <div class="producto-detalle" id="producto-detalle">
+        <div class="skeleton-detalle">
+            <div class="skeleton-card" style="height:400px"></div>
+            <div style="display:flex;flex-direction:column;gap:1rem">
+                <div class="skeleton-card" style="height:40px"></div>
+                <div class="skeleton-card" style="height:20px"></div>
+                <div class="skeleton-card" style="height:80px"></div>
+                <div class="skeleton-card" style="height:50px"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Productos relacionados -->
+    <section class="section" id="sec-relacionados" style="display:none">
+        <h2 class="section-title" data-i18n="prod.relacionados">Productos relacionados</h2>
+        <div class="productos-grid" id="grid-relacionados"></div>
+    </section>
+
+</main>
+
+<footer class="footer" role="contentinfo">
+    <div class="footer-inner">
+        <span class="logo">✦ Lau &amp; Up.</span>
+        <p data-i18n="footer.texto">© 2026 · Proyecto Programación Web · USCO</p>
+    </div>
+</footer>
+
+<!-- Carrito -->
+<div class="overlay" id="overlay" onclick="cerrarCarrito()"></div>
+<aside class="carrito-panel" id="carrito-panel" role="dialog" aria-modal="true" aria-label="Carrito">
+    <div class="carrito-header">
+        <h3 data-i18n="carrito.titulo">Tu carrito</h3>
+        <button onclick="cerrarCarrito()" class="btn-cerrar" aria-label="Cerrar carrito">✕</button>
+    </div>
+    <div class="carrito-items" id="carrito-items"></div>
+    <div class="carrito-footer">
+        <div class="carrito-total">
+            <span data-i18n="carrito.total">Total</span>
+            <strong id="carrito-total-val">$0</strong>
+        </div>
+        <button class="btn-primary w100" onclick="checkout()" data-i18n="carrito.pagar">Proceder al pago</button>
+    </div>
+</aside>
+
+<!-- Modal checkout -->
+<div class="modal-overlay" id="modal-checkout" style="display:none">
+    <div class="modal">
+        <h3 data-i18n="checkout.titulo">Confirmar pedido</h3>
+        <label class="form-label">
+            <span data-i18n="checkout.direccion">Dirección de envío</span>
+            <input type="text" id="input-direccion" 
+                   data-i18n-placeholder="checkout.placeholder"
+                   placeholder="Calle 12 #34-56, Neiva"/>
+        </label>
+        <div class="modal-actions">
+            <button class="btn-outline" onclick="cerrarCheckout()" data-i18n="checkout.cancelar">Cancelar</button>
+            <button class="btn-primary" onclick="confirmarPedido()" data-i18n="checkout.confirmar">Confirmar</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/i18n.js"></script>
+<script src="js/api.js"></script>
+<script src="js/carrito.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/producto.js"></script>
+</body>
+</html>

@@ -43,27 +43,28 @@ async function cargarProductosDestacados() {
 function renderProductoCard(p) {
     const precio = formatPrecio(p.precio);
     return `
-        <div class="producto-card">
-            <div class="producto-img">
-                ${p.imagenUrl
-                    ? `<img src="${p.imagenUrl}" alt="${p.nombre}" loading="lazy"/>`
-                    : `<div class="producto-img-placeholder">${ICONOS_CAT[p.categoria?.nombre] || '🌟'}</div>`
-                }
-                ${p.stock <= 0 ? '<span class="badge-agotado">Agotado</span>' : ''}
-            </div>
-            <div class="producto-body">
-                <span class="producto-cat">${p.categoria?.nombre || ''}</span>
-                <h4 class="producto-nombre">${p.nombre}</h4>
-                <p class="producto-desc">${p.descripcion || ''}</p>
-                <div class="producto-footer">
-                    <strong class="producto-precio">${precio}</strong>
-					<button class="btn-add ${p.stock <= 0 ? 'disabled' : ''}"
-					        onclick="agregarAlCarrito(${JSON.stringify(p).replace(/"/g, '&quot;')})"
-					        ${p.stock <= 0 ? 'disabled' : ''}>
-					    ${p.stock <= 0 ? I18N.get('prod.agotado') : I18N.get('prod.agregar')}
-					</button>
-                </div>
-            </div>
-        </div>
+	<div class="producto-card" onclick="window.location='producto.html?id=${p.id}'"
+	             style="cursor:pointer" role="article">
+	            <div class="producto-img">
+	                ${p.imagenUrl
+	                    ? `<img src="${p.imagenUrl}" alt="${p.nombre}" loading="lazy"/>`
+	                    : `<div class="producto-img-placeholder">${ICONOS_CAT[p.categoria?.nombre] || '🌟'}</div>`
+	                }
+	                ${p.stock <= 0 ? `<span class="badge-agotado">${I18N.get('prod.agotado')}</span>` : ''}
+	            </div>
+	            <div class="producto-body">
+	                <span class="producto-cat">${p.categoria?.nombre || ''}</span>
+	                <h4 class="producto-nombre">${p.nombre}</h4>
+	                <p class="producto-desc">${p.descripcion || ''}</p>
+	                <div class="producto-footer">
+	                    <strong class="producto-precio">${precio}</strong>
+	                    <button class="btn-add ${p.stock <= 0 ? 'disabled' : ''}"
+	                            onclick="event.stopPropagation(); agregarAlCarrito(${JSON.stringify(p).replace(/"/g, '&quot;')})"
+	                            ${p.stock <= 0 ? 'disabled' : ''}>
+	                        ${p.stock <= 0 ? I18N.get('prod.agotado') : I18N.get('prod.agregar')}
+	                    </button>
+	                </div>
+	            </div>
+	        </div>
     `;
 }

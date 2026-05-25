@@ -44,23 +44,23 @@
             <label class="filtro-label"><span data-i18n="filtro.categoria">Categoría</span></label>
             <div id="filtro-categorias">
                 <label class="radio-label">
-                    <input type="radio" name="cat" value="" checked onchange="filtrar()"/> Todas
+                    <input type="radio" name="cat" value="" checked onchange="filtrar()"/><span data-i18n="filtro.todas">Todas</span>
                 </label>
             </div>
         </div>
         <div class="filtro-grupo">
             <label class="filtro-label"><span data-i18n="filtro.ordenar">Ordenar por</span></label>
             <select id="select-orden" class="select-orden" onchange="filtrar()">
-                <option value="">Relevancia</option>
-                <option value="precio-asc">Precio: menor a mayor</option>
-                <option value="precio-desc">Precio: mayor a menor</option>
-                <option value="nombre">Nombre A-Z</option>
+                <option value="" data-i18n="ordenar.relevancia">Relevancia</span></option>
+                <option value="precio-asc" data-i18n="ordenar.menormayor">Precio: menor a mayor</option>
+                <option value="precio-desc" data-i18n="ordenar.mayormenor">Precio: mayor a menor</option>
+                <option value="nombre" data-i18n="ordenar.nomalfabet">Nombre A-Z</option>
             </select>
         </div>
     </aside>
 
     <div class="catalogo-main">
-        <p id="resultado-count" class="resultado-count">Cargando productos...</p>
+        <p id="resultado-count" class="resultado-count"><span data-i18n="cargar.productos">Cargando productos...</span></p>
         <div class="productos-grid" id="productos-catalogo"></div>
     </div>
 </div>

@@ -52,15 +52,15 @@ async function cargarProductos() {
                 <span class="${p.stock <= 5 ? 'stock-bajo' : ''}">${p.stock}</span>
             </td>
             <td class="acciones">
-                <button class="btn-editar" onclick="editarProducto(${p.id})">✏️ Editar</button>
-                <button class="btn-eliminar" onclick="eliminarProducto(${p.id})">🗑️ Eliminar</button>
+                <button class="btn-editar" onclick="editarProducto(${p.id})">✏️ ${I18N.get('admin.editar')}</button>
+                <button class="btn-eliminar" onclick="eliminarProducto(${p.id})">🗑️ ${I18N.get('admin.eliminar')}</button>
             </td>
         </tr>
     `).join('');
 }
 
 function abrirModalProducto() {
-    document.getElementById('modal-titulo').textContent = 'Nuevo producto';
+    document.getElementById('modal-titulo').textContent = I18N.get('admin.holdnuevoProducto');
     document.getElementById('prod-id').value        = '';
     document.getElementById('prod-nombre').value    = '';
     document.getElementById('prod-precio').value    = '';
@@ -77,7 +77,7 @@ function cerrarModalProducto() {
 
 async function editarProducto(id) {
     const p = await API.get('/api/productos/' + id);
-    document.getElementById('modal-titulo').textContent     = 'Editar producto';
+    document.getElementById('modal-titulo').textContent     = I18N.get('admin.editarProducto');
     document.getElementById('prod-id').value                = p.id;
     document.getElementById('prod-nombre').value            = p.nombre;
     document.getElementById('prod-precio').value            = p.precio;
@@ -146,11 +146,11 @@ async function cargarPedidos() {
             <td>${new Date(p.creadoEn).toLocaleDateString('es-CO')}</td>
             <td>
                 <select class="select-estado" onchange="cambiarEstadoPedido(${p.id}, this.value)">
-                    <option value="PENDIENTE"  ${p.estado==='PENDIENTE'  ? 'selected':''}>Pendiente</option>
-                    <option value="PAGADO"     ${p.estado==='PAGADO'     ? 'selected':''}>Pagado</option>
-                    <option value="ENVIADO"    ${p.estado==='ENVIADO'    ? 'selected':''}>Enviado</option>
-                    <option value="ENTREGADO"  ${p.estado==='ENTREGADO'  ? 'selected':''}>Entregado</option>
-                    <option value="CANCELADO"  ${p.estado==='CANCELADO'  ? 'selected':''}>Cancelado</option>
+                    <option value="PENDIENTE"  ${p.estado==='PENDIENTE'  ? 'selected':''}>${I18N.get('estado.pendiente')}</option>
+                    <option value="PAGADO"     ${p.estado==='PAGADO'     ? 'selected':''}>${I18N.get('estado.pagado')}</option>
+                    <option value="ENVIADO"    ${p.estado==='ENVIADO'    ? 'selected':''}>${I18N.get('estado.enviado')}</option>
+                    <option value="ENTREGADO"  ${p.estado==='ENTREGADO'  ? 'selected':''}>${I18N.get('estado.entregado')}</option>
+                    <option value="CANCELADO"  ${p.estado==='CANCELADO'  ? 'selected':''}>${I18N.get('estado.cancelado')}</option>
                 </select>
             </td>
         </tr>
