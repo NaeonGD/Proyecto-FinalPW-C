@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### Credenciales sensibles ###
+src/main/resources/application.properties
+src/main/resources/lauup.jks
